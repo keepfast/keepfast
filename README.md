@@ -1,6 +1,6 @@
 # Keepfast - a WPO Monitor
 
-![image](https://cloudup.com/ciPH3ndW9t6)
+![image](https://i.cloudup.com/T8NZWsOiIh-3000x3000.png)
 
 ## Instructions
 
