@@ -1,0 +1,177 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <h1 id="title-current-profile">{{ urlProfile }}</h1>
+
+  <legend>Current</legend>
+  <div class="row demo-tiles">
+    <div class="span3">
+      <div class="tile">
+        <h3 class="tile-title">Page Speed</h3>
+        <p id="connections-pagespeed" style="font-size: 96px;line-height: 96px;">0</p>
+        <span class="palette palette-turquoise">Grade</span>
+      </div>
+    </div>
+
+    <div class="span3">
+      <div class="tile">
+        <h3 class="tile-title">Yslow</h3>
+        <p id="connections-yslow" style="font-size: 96px;line-height: 96px;">0</p>
+        <span class="palette palette-turquoise">Grade</span>
+      </div>
+    </div>
+
+    <div class="span3">
+      <div class="tile">
+        <h3 class="tile-title">Time to load</h3>
+        <p id="connections-timetoload" style="font-size: 96px;line-height: 96px;">0</p>
+        <span class="palette palette-turquoise">Seconds</span>
+      </div>
+    </div>
+
+    <div class="span3">
+      <div class="tile">
+        <h3 class="tile-title">Size</h3>
+        <p id="connections-size" style="font-size: 96px;line-height: 96px;">0</p>
+        <span class="palette palette-turquoise">MB</span>
+      </div>
+    </div>
+
+    <div class="span9">
+        <br>
+        <legend>Page speed</legend>
+        <section class="info" id="chart-pagespeed" style="float: left;">
+            <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+        </section>
+
+        <legend>Yslow</legend>
+        <section class="info" id="chart-yslow" style="float: left;">
+            <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+        </section>
+
+        <legend>Page Stats &gt; number of resources</legend>
+        <div class="row-fluid">
+            <section class="info" id="chart-numberResources" style="float: left;">
+                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+            </section>
+        </div>
+
+        <legend>Page Stats &gt; number of hosts</legend>
+        <div class="row-fluid">
+            <section class="info" id="chart-numberHosts" style="float: left;">
+                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+            </section>
+        </div>
+
+        <legend>Page Stats &gt; number of total requests bytes</legend>
+        <div class="row-fluid">
+            <section class="info" id="chart-totalRequestBytes" style="float: left;">
+                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+            </section>
+        </div>
+
+        <legend>Page Stats &gt; number of css requests bytes</legend>
+        <div class="row-fluid">
+            <section class="info" id="chart-cssResponseBytes" style="float: left;">
+                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+            </section>
+        </div>
+
+        <legend>Page Stats &gt; number of html requests bytes</legend>
+        <div class="row-fluid">
+            <section class="info" id="chart-htmlResponseBytes" style="float: left;">
+                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+            </section>
+        </div>
+
+        <legend>Page Stats &gt; number of image response bytes</legend>
+        <div class="row-fluid">
+            <section class="info" id="chart-imageResponseBytes" style="float: left;">
+                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+            </section>
+        </div>
+
+        <legend>Page Stats &gt; number of static resources bytes</legend>
+        <div class="row-fluid">
+            <section class="info" id="chart-numberStaticResources" style="float: left;">
+                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+            </section>
+        </div>
+
+        <legend>Page Stats &gt; number of javascript response bytes</legend>
+        <div class="row-fluid">
+            <section class="info" id="chart-javascriptResponseBytes" style="float: left;">
+                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+            </section>
+        </div>
+
+        <legend>Page Stats &gt; number of other response bytes</legend>
+        <div class="row-fluid">
+            <section class="info" id="chart-otherResponseBytes" style="float: left;">
+                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+            </section>
+        </div>
+
+        <legend>Page Stats &gt; number of javascript response bytes</legend>
+        <div class="row-fluid">
+            <section class="info" id="chart-numberJsResources" style="float: left;">
+                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+            </section>
+        </div>
+
+        <legend>Page Stats &gt; number of css response bytes</legend>
+        <div class="row-fluid">
+            <section class="info" id="chart-numberCssResources" style="float: left;">
+                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+            </section>
+        </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block css %}
+  {% parent %}
+    <!-- vendor styles -->
+    <link rel="stylesheet" href="/css/nvd3/nv.d3.css">
+    <link rel="stylesheet" href="/css/wpo-monitor-chart.css">
+{% endblock %}
+
+{% block js %}
+  {% parent %}
+  <!-- Load JS here for greater good =============================-->
+  <!-- scripts for nvd3 -->
+  <script src="/lib/nvd3/d3.v2.min.js"></script>
+  <script src="/lib/nvd3/nv.d3.min.js"></script>
+  <script src="/lib/nvd3/tooltip.js"></script>
+  <script src="/lib/nvd3/utils.js"></script>
+  <script src="/lib/nvd3/models/legend.js"></script>
+  <script src="/lib/nvd3/models/axis.js"></script>
+  <script src="/lib/nvd3/models/scatter.js"></script>
+  <script src="/lib/nvd3/models/line.js"></script>
+  <script src="/lib/nvd3/models/lineChart.js"></script>
+
+  <script src="/js/chart.js"></script>
+  <script src="/js/pagestat.js"></script>
+  <script src="/js/pagespeed.js"></script>
+  <script src="/js/yslow.js"></script>
+
+  <script>
+    $(document).ready(function(){
+
+        // load pagespeed
+        var pagespeed = new Pagespeed();
+
+        pagespeed.runner('{{ urlProfile }}');
+
+        // load yslow
+        var yslow = new Yslow();
+
+        yslow.runner('{{ urlProfile }}');
+
+        // load pagestat
+        var pagestat = new Pagestat();
+
+        pagestat.runner('{{ urlProfile }}');
+    });
+  </script>
+{% endblock %}

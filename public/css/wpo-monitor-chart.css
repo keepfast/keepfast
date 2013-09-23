@@ -1,0 +1,6 @@
+.nv-x text {
+    display: none;
+}
+.nv-x text.nv-axislabel {
+    display: block;
+}

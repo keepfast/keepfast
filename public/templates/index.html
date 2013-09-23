@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container">
+      <div class="row demo-tiles">
+        <div class="span6">
+          <div class="tile">
+            <img src="images/icons/Watches@2x.png" alt="Compas@2x" class="tile-image big-illustration">
+            <h3 class="tile-title">Add a new URL</h3>
+            <p>Monitor your URLs.</p>
+            <a class="btn btn-primary btn-large btn-block" href="http://localhost:3000/profile">Add a new URL</a>
+          </div>
+        </div>
+
+        <div class="span6">
+          <div class="tile">
+            <img src="images/icons/Book@2x.png" alt="Infinity-Loop@2x" class="tile-image">
+            <h3 class="tile-title">Learn</h3>
+            <p>Check the documentation to API.</p>
+            <a class="btn btn-primary btn-large btn-block" href="/api">View API</a>
+          </div>
+        </div>
+      </div> <!-- /tiles -->
+  </div> <!-- /tiles -->
+{% endblock %}

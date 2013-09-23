@@ -1,0 +1,221 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <h1>pagestats</h1>
+  <table id="pagestatsViews" class="table table-bordered table-striped table-condensed">
+      <thead>
+          <tr>
+              <td>URL</td>
+              <td>Method</td>
+          </tr>
+      <tbody>
+      </tbody>
+          <tr>
+              <td>
+                  <a href="/pagestats.json">/pagestats.json</a>
+              </td>
+              <td>GET</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/pagestats/:id/all.json">/pagestats/:id/all.json</a>
+              </td>
+              <td>GET</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/pagestats/date/:date/all.json">/pagestats/date/:date/all.json</a>
+              </td>
+              <td>GET</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/pagestats/url/:url/all.json">/pagestats/url/:url/all.json</a>
+              </td>
+              <td>GET</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/pagestats">/pagestats</a>
+              </td>
+              <td>POST</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/pagestats/:id">/pagestats/:id</a>
+              </td>
+              <td>PUT</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/pagestats/:id">/pagestats/:id</a>
+              </td>
+              <td>DELETE</td>
+          </tr>
+      </thead>
+  </table>
+
+  <h1>pagespeed</h1>
+
+  <table id="pagespeedViews" class="table table-bordered table-striped table-condensed">
+      <thead>
+          <tr>
+              <td>URL</td>
+              <td>Method</td>
+          </tr>
+      <tbody>
+      </tbody>
+          <tr>
+              <td>
+                  <a href="/pagespeed.json">/pagespeed.json</a>
+              </td>
+              <td>GET</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/pagespeed/:id.json">/pagespeed/:id.json</a>
+              </td>
+              <td>GET</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/pagespeed/url/:url/all.json">/pagespeed/url/:url.json</a>
+              </td>
+              <td>GET</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/pagespeed">/pagespeed</a>
+              </td>
+              <td>POST</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/pagespeed/:id">/pagespeed/:id</a>
+              </td>
+              <td>PUT</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/pagespeed/:id">/pagespeed/:id</a>
+              </td>
+              <td>DELETE</td>
+          </tr>
+      </thead>
+  </table>
+
+  <h1>yslow</h1>
+
+  <table id="yslowViews" class="table table-bordered table-striped table-condensed">
+      <thead>
+          <tr>
+              <td>URL</td>
+              <td>method</td>
+          </tr>
+      <tbody>
+      </tbody>
+          <tr>
+              <td>
+                  <a href="/yslow.json">/yslow.json</a>
+              </td>
+              <td>GET</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/yslow/:id.json">/yslow/:id.json</a>
+              </td>
+              <td>GET</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/yslow/url/:url/all.json">/yslow/url/:url.json</a>
+              </td>
+              <td>GET</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/yslow">/yslow</a>
+              </td>
+              <td>POST</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/yslow/:id">/yslow/:id</a>
+              </td>
+              <td>PUT</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/yslow/:id">/yslow/:id</a>
+              </td>
+              <td>DELETE</td>
+          </tr>
+      </thead>
+  </table>
+
+  <h1>profiles</h1>
+  <table id="profileViews" class="table table-bordered table-striped table-condensed">
+      <thead>
+          <tr>
+              <td>URL</td>
+              <td>Method</td>
+          </tr>
+      <tbody>
+      </tbody>
+          <tr>
+              <td>
+                  <a href="/profile.json">/profile.json</a>
+              </td>
+              <td>GET</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/profile/:id.json">/profile/:id.json</a>
+              </td>
+              <td>GET</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/profile">/profile</a>
+              </td>
+              <td>POST</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/profile/:id">/profile/:id</a>
+              </td>
+              <td>PUT</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/profile/:id">/profile/:id</a>
+              </td>
+              <td>DELETE</td>
+          </tr>
+      </thead>
+  </table>
+
+  <h1>schedule</h1>
+  <table id="scheduleViews" class="table table-bordered table-striped table-condensed">
+      <thead>
+          <tr>
+              <td>URL</td>
+              <td>Method</td>
+          </tr>
+      <tbody>
+      </tbody>
+          <tr>
+              <td>
+                  <a href="/schedule">/schedule</a>
+              </td>
+              <td>POST</td>
+          </tr>
+          <tr>
+              <td>
+                  <a href="/schedule/:url">/schedule/:url</a>
+              </td>
+              <td>POST</td>
+          </tr>
+      </thead>
+  </table>
+{% endblock %}

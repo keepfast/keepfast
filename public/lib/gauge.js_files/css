@@ -1,0 +1,18 @@
+@font-face {
+  font-family: 'Amaranth';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Amaranth'), url(http://themes.googleusercontent.com/static/fonts/amaranth/v3/RvdVaxHTnYbJDko8dLi4znYhjbSpvc47ee6xR_80Hnw.woff) format('woff');
+}
+@font-face {
+  font-family: 'Amaranth';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Amaranth Bold'), local('Amaranth-Bold'), url(http://themes.googleusercontent.com/static/fonts/amaranth/v3/hh4Od9pccylRpuf5LUPgErrIa-7acMAeDBVuclsi6Gc.woff) format('woff');
+}
+@font-face {
+  font-family: 'Just Another Hand';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Just Another Hand'), local('JustAnotherHand-Regular'), url(http://themes.googleusercontent.com/static/fonts/justanotherhand/v4/fKV8XYuRNNagXr38eqbRf8-ortBJrX8dG4H9Ox7zsWc.woff) format('woff');
+}

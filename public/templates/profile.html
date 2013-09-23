@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <h1>
+    Profile
+  </h1>
+  <div class="span1 btn-profile-add">
+    <a href="#fakelink" class="btn btn-large btn-block btn-primary">
+      <span class="fui-plus"></span>
+    </a>
+  </div>
+
+  <button class="btn btn-large btn-block btn-profile btn-profile-alert"></button>
+
+  <form class="form-profile" action="">
+    <fieldset>
+      <label>url</label>
+      <input type="text" name="url" placeholder="Type a url…">
+      <label>email</label>
+      <input type="text" name="email" placeholder="Type a email...">
+      <label>thumbnail</label>
+      <input type="text" name="thumbnail" placeholder="Type a url...">
+      <button type="submit" class="btn btn-profile-add-submit">Submit</button>
+    </fieldset>
+  </form>
+
+  <table id="profiles-table" class="table table-bordered table-striped table-condensed">
+    <thead>
+        <tr>
+            <td>URL</td>
+            <td>Email</td>
+            <td>Actions</td>
+        </tr>
+    </thead>
+    <tbody id="profile-tbody">
+    </tbody>
+  </table>
+{% endblock %}
+
+{% block js %}
+  {% parent %}
+  <!-- Load JS here for greater good =============================-->
+  <script src="js/profile.js"></script>
+{% endblock %}
