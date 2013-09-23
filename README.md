@@ -23,7 +23,12 @@ cd keepfast
 sudo npm install
 ```
 
-5. And run:
+5. Run your MongoDB, or see [how to run](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/#using-mongodb-from-homebrew-and-macports):
+```bash
+mongod
+```
+
+6. And run:
 ```bash
 node server.js
 ```
