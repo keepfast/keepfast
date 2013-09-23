@@ -6,7 +6,7 @@
 
 #### How to run the project
 
-1. Install [Git](http://git-scm.com/downloads) and [NodeJS](http://nodejs.org/download/).
+1. Install [Git](http://git-scm.com/downloads), [MongoDB](http://docs.mongodb.org/manual/installation/) and [NodeJS](http://nodejs.org/download/).
 
 2. Clone the project:
 ```bash
