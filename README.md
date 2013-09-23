@@ -33,7 +33,6 @@ It's unning at `localhost:3000`
 #### Author
 
 [![Davidson Fellipe](http://gravatar.com/avatar/054c583ad5dc09a861874e14dcb43e4c?s=70)](https://github.com/davidsonfellipe)
---- | --- | --- | --- | --- | --- | ---
 [Davidson Fellipe](https://github.com/davidsonfellipe)
 
 ## License
