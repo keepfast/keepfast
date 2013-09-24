@@ -46,13 +46,15 @@
       </div>
     </div>
 
-    {% if !pagespeed %}
-    <div class="container alert alert-danger">WARNING! Pagespeed key is currently set to the default value. Please updated <code>./conf/pagespeed.js</code> with your <a href="https://developers.google.com/speed/pagespeed/">api key</a> or your results will not include pagespeed data.</div>
-    {% endif %}
 
     <section class="container">
         <div class="row">
             <div class="span12">
+
+              {% if !pagespeed %}
+                <div class="alert alert-danger">WARNING! Pagespeed key is currently set to the default value. Please updated <code>./conf/pagespeed.js</code> with your <a href="https://developers.google.com/speed/pagespeed/">api key</a> or your results will not include pagespeed data.</div>
+              {% endif %}
+
               {% block content %}
               {% endblock %}
             </div>
