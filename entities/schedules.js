@@ -90,26 +90,30 @@ exports.addSchedule = function(req, res) {
         currentTimestamp = timestamp.current();
 
     // get data from pagespeed
-    var get = {
-        host: 'www.googleapis.com',
-        path: '/pagespeedonline/v1/runPagespeed?url=' + encodeURIComponent(url) +
-            '&key=' + key + '&strategy=' + type + '&locale=' + locale + '&prettyprint=false'
-    };
+    if (key !== 'YOUR_KEY_HERE') {
+        var get = {
+            host: 'www.googleapis.com',
+            path: '/pagespeedonline/v1/runPagespeed?url=' + encodeURIComponent(url) +
+                '&key=' + key + '&strategy=' + type + '&locale=' + locale + '&prettyprint=false'
+        };
 
-    var output = '';
+        var output = '';
 
-    https.get(get, function(res){
+        https.get(get, function(res){
 
-        res.on('data', function(chunk){
-            output += chunk;
+            res.on('data', function(chunk){
+                output += chunk;
+            });
+
+            res.on('end', function() {
+                var obj = JSON.parse(output);
+                exports.writeStatsPagespeed(obj, currentTimestamp, url);
+            });
+
         });
-
-        res.on('end', function() {
-            var obj = JSON.parse(output);
-            exports.writeStatsPagespeed(obj, currentTimestamp, url);
-        });
-
-    });
+    } else {
+        console.log('Pagespeed skipped, update ./conf/pagespeed.js with your pagespeed key.');
+    }
 
     // get data from yslow
     var YSlowLib = require('yslowjs/lib/yslow'),
@@ -123,7 +127,9 @@ exports.addSchedule = function(req, res) {
         exports.writeStatsYslow(result, currentTimestamp, url);
       });
     }
-    catch (e) {}
+    catch (e) {
+        console.trace(e);
+    }
 
     res.send({'status': "200",
               'msg': "wait a few moments"});
