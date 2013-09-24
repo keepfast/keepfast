@@ -36,7 +36,7 @@ mongod
 node server.js
 ```
 
-It's running at `localhost:3000`
+7. It's running at [localhost:3000](http://localhost:3000)
 
 #### Author
 
