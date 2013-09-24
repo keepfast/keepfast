@@ -1,5 +1,7 @@
 # Keepfast - a WPO Monitor
 
+[![Dependency Status](https://david-dm.org/davidsonfellipe/keepfast.png)](https://david-dm.org/davidsonfellipe/keepfast)
+
 ![image](https://i.cloudup.com/T8NZWsOiIh-3000x3000.png)
 [Video Demo](https://cloudup.com/cQfUpvDHCcx)
 
