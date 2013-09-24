@@ -20,6 +20,8 @@ app.configure(function () {
     app.use(express.static(path.join(__dirname, 'public')));
 });
 
+var psHasKey = (require('./conf/pagespeed').key !== 'YOUR_KEY_HERE');
+
 //config templates
 var TEMPLATE_PATH = path.join(__dirname, 'public/templates');
 
@@ -36,17 +38,17 @@ swig.init({
 app.set('views', TEMPLATE_PATH);
 
 app.get('/', function (req, res) {
-    res.render('index.html', { foo: 'bar' });
+    res.render('index.html', { foo: 'bar', pagespeed: psHasKey });
 });
 
 // profile : crud
 app.get('/profile', function (req, res) {
-    res.render('profile.html');
+    res.render('profile.html', { pagespeed: psHasKey });
 });
 
 // profile : dashboard
 app.get('/dashboard/:urlProfile', function (req, res) {
-    res.render('dashboard.html', { urlProfile: req.params.urlProfile });
+    res.render('dashboard.html', { urlProfile: req.params.urlProfile, pagespeed: psHasKey });
 });
 
 // profile : api
@@ -87,7 +89,7 @@ app.post('/schedule/:url', schedule.removeSchedulesByURL);
 
 //api docs
 app.get('/api', function (req, res) {
-    res.render('api.html');
+    res.render('api.html', { pagespeed: psHasKey });
 });
 
 app.listen(3000);
