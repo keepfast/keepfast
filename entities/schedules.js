@@ -26,6 +26,11 @@ exports.writeStatsPagespeed = function(json, currentTimestamp, url) {
         pagespeed = require('./pagespeeds'),
         pagestats = require('./pagestats');
 
+    if (json.error) {
+        console.trace(json.error);
+        return;
+    }
+
     // create pagestat item
     var pagestatItem = {};
         pagestatItem.body = {url: json.id,
@@ -122,14 +127,13 @@ exports.addSchedule = function(req, res) {
 
     console.log('\nRunning (YSLOW Async)....');
 
-    try {
-      yslow.run( function (result) {
+    yslow.run( function (error, result) {
+      if (error) {
+        console.trace(error);
+      } else {
         exports.writeStatsYslow(result, currentTimestamp, url);
-      });
-    }
-    catch (e) {
-        console.trace(e);
-    }
+      }
+    });
 
     res.send({'status': "200",
               'msg': "wait a few moments"});
