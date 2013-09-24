@@ -36,7 +36,7 @@ mongod
 node server.js
 ```
 
-It's unning at `localhost:3000`
+It's running at `localhost:3000`
 
 #### Author
 
