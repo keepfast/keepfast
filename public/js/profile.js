@@ -44,7 +44,8 @@ Profile.prototype.scheduleRemoveAnalytics = function(that) {
         });
     }
 
-    window.location = window.location
+    document.location.reload(true);
+
 
 };
 
