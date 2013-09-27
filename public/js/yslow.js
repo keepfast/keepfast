@@ -1,3 +1,5 @@
+/*global $:false, getChart:false */
+
 function Yslow(){
 }
 
