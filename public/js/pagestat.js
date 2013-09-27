@@ -1,3 +1,5 @@
+/*global $:false, getChart:false */
+
 function Pagestat(){
 }
 
@@ -13,7 +15,7 @@ Pagestat.prototype.getTotalBytesTransferred = function() {
 
         for (var i = 0; i < arguments.length; i++) {
             // debugger;
-            pageSize += parseInt(arguments[i][last] ? arguments[i][last] : 0);
+            pageSize += parseInt((arguments[i][last] ? arguments[i][last] : 0), 10);
         }
 
         // convert bytes to Mb

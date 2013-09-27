@@ -1,14 +1,16 @@
-function Profile(){
+/*global $:false, console:false, document:false */
+
+function Profile() {
 }
 
-Profile.prototype.runner = function() {
+Profile.prototype.runner = function () {
     this.showAll();
     this.bind();
 };
 
-Profile.prototype.scheduleAnalytics = function(that) {
+Profile.prototype.scheduleAnalytics = function (that) {
 
-    if(!$(that).hasClass('wait')) {
+    if (!$(that).hasClass('wait')) {
 
         var url = $(that).attr('data-url');
 
@@ -74,7 +76,7 @@ Profile.prototype.bind = function() {
         $inputs.prop("disabled", true);
 
         // fire off the request to /profile router from API
-        request = $.ajax({
+        var request = $.ajax({
             url: "/profile",
             type: "post",
             data: serializedData
@@ -112,14 +114,14 @@ Profile.prototype.bind = function() {
         event.preventDefault();
     });
 
-    $('.profile-schedule-analytics').live('click', function(event){
+    $('.profile-schedule-analytics').live('click', function (event){
 
         that.scheduleAnalytics(this);
         event.preventDefault();
 
     });
 
-    $('.profile-schedule-remove').live('click', function(event){
+    $('.profile-schedule-remove').live('click', function (event){
 
         that.scheduleRemoveAnalytics(this);
         event.preventDefault();
@@ -127,9 +129,9 @@ Profile.prototype.bind = function() {
     });
 };
 
-Profile.prototype.showAll = function() {
+Profile.prototype.showAll = function () {
 
-    $.getJSON('/profile.json', function(data) {
+    $.getJSON('/profile.json', function (data) {
 
         var items = {
             emails: [],
