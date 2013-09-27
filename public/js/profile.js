@@ -16,7 +16,7 @@ Profile.prototype.scheduleAnalytics = function (that) {
 
         $.post('/schedule', { url: url } )
          .done(function(data) {
-                                $(that).html('<span class="fui-time"></span> ' + data.msg)
+                                $(that).html('<span class="fui-time"></span>')
                                        .hide()
                                        .addClass('wait')
                                        .fadeIn(500);
@@ -141,18 +141,21 @@ Profile.prototype.showAll = function () {
             urls: []
         };
 
+        var HTMLTOOLBAR = '<div class="btn-toolbar">' +
+                          '  <div class="btn-group">' +
+                          '    <a class="btn btn-primary profile-schedule-analytics" href="/schedule" data-url="%URLENCODED%"><i class="fui-time"></i></a>' +
+                          '    <a class="btn btn-primary active profile-schedule-remove" href="/schedule/%URLENCODED%"><i class="fui-cross"></i></a>' +
+                          '    <a class="btn btn-primary" href="/dashboard/%URLENCODED%"><i class="fui-eye"></i></a>' +
+                          '  </div>' +
+                          '</div>';
+
         var HTML = '<tr>' +
                    '   <td>'+
                    '    <a href="/dashboard/%URLENCODED%"><span class="fui-eye"></span> ' + '%URL%</a>' +
                    '   </td>' +
                    '   <td>%EMAIL%</td>' +
-                   '   <td style="width: 200px; font-size: 1px;">' +
-                   '    <a href="/schedule" data-url="%URLENCODED%" class="btn btn-small btn-block btn-primary profile-schedule-analytics">' +
-                   '      <span class="fui-time"></span> schedule analysis</a>' +
-                   '    </a>' +
-                   '    <a href="/schedule/%URLENCODED%" class="btn btn-small btn-block btn-primary profile-schedule-remove">' +
-                   '      <span class="fui-cross"></span> remove all data</a>' +
-                   '    </a>' +
+                   '   <td style="width: 145px; font-size: 1px;">' +
+                   HTMLTOOLBAR +
                    '   </td>' +
                    '</tr>',
             HTMLinserted = '';
@@ -160,6 +163,7 @@ Profile.prototype.showAll = function () {
 
         $.each(data, function(key, val) {
             HTMLinserted += HTML.replace('%URL%', val.url)
+                                .replace('%URLENCODED%', encodeURIComponent(val.url))
                                 .replace('%URLENCODED%', encodeURIComponent(val.url))
                                 .replace('%URLENCODED%', encodeURIComponent(val.url))
                                 .replace('%URLENCODED%', encodeURIComponent(val.url))

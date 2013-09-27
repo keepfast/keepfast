@@ -1,5 +1,11 @@
 {% extends 'layout.html' %}
 
+
+{% block css %}
+  {% parent %}
+    <link rel="stylesheet" href="/css/modules/profile.css">
+{% endblock %}
+
 {% block content %}
   <h1>
     Profile
