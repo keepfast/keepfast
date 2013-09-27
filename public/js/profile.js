@@ -123,7 +123,10 @@ Profile.prototype.bind = function() {
 
     $('.profile-schedule-remove').live('click', function (event){
 
-        that.scheduleRemoveAnalytics(this);
+        if(confirm("Are you sure you wish to delete all data?")) {
+            that.scheduleRemoveAnalytics(this);
+        }
+
         event.preventDefault();
 
     });
