@@ -14,7 +14,6 @@ Pagestat.prototype.getTotalBytesTransferred = function() {
         pageSize = 0;
 
         for (var i = 0; i < arguments.length; i++) {
-            // debugger;
             pageSize += parseInt((arguments[i][last] ? arguments[i][last] : 0), 10);
         }
 
