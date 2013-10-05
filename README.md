@@ -5,6 +5,16 @@
 ![image](https://i.cloudup.com/T8NZWsOiIh-3000x3000.png)
 [Video Demo](https://cloudup.com/cQfUpvDHCcx)
 
+The idea of the tool is to create a way of monitoring
+indicators on the performance of a web page. Integrating these
+indicators more easily, and enhance understanding of these
+criteria for the entire development team. allowing
+ability to manage the history of changes in these indicators
+during the development cycle of the application. The main
+indicators will be time page load, page size,
+and the related degrees tools:
+pagespeed and yslow.
+
 ## Instructions
 
 #### How to run the project
