@@ -56,7 +56,7 @@ node server.js
 
 ## Contribute
 
-Anyone and everyone is welcome to contribute. See some developers that helped.
+Anyone and everyone is welcome to contribute. See some [developers](https://github.com/davidsonfellipe/keepfast/graphs/contributors) that helped.
 
 ## License
 
