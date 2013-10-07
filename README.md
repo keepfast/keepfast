@@ -54,7 +54,7 @@ node server.js
 <br>
 [Davidson Fellipe](https://github.com/davidsonfellipe)
 
-## contribute
+## Contribute
 
 Anyone and everyone is welcome to contribute. See some developers that helped.
 
