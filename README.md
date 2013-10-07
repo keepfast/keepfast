@@ -54,6 +54,10 @@ node server.js
 <br>
 [Davidson Fellipe](https://github.com/davidsonfellipe)
 
+## contribute
+
+Anyone and everyone is welcome to contribute. See some developers that helped.
+
 ## License
 
 Code is under [MIT](http://davidsonfellipe.mit-license.org) license
