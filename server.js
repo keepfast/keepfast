@@ -92,5 +92,5 @@ app.get('/api', function (req, res) {
     res.render('api.html', { pagespeed: psHasKey });
 });
 
-app.listen(3000);
-console.log('Listening on port 3000...');
+app.listen(app.get('port'));
+console.log('Listening on port %s...', app.get('port'));
