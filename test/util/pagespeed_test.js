@@ -11,7 +11,7 @@ var conf = require(path.join(root, 'conf', 'pagespeed'));
 var ps = require(path.join(root, 'util', 'pagespeed'));
 
 test('util/pagespeed', function(t) {
-    t.plan(6);
+    t.plan(7);
 
     // default
     t.equal(ps.key, 'YOUR_KEY_HERE');
@@ -27,5 +27,9 @@ test('util/pagespeed', function(t) {
     // error setter
     ps.error('TEST_ERROR');
     t.equal(ps.error(), 'TEST_ERROR');
+
+    // reset error
+    ps.error(false);
+    t.equal(ps.error(), false);
 });
 

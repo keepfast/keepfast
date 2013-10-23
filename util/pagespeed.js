@@ -10,7 +10,7 @@ module.exports = {
         if (config.key === 'YOUR_KEY_HERE') {
             return 'Invalid Key: Default configuration value set';
         }
-        if (err) {
+        if (err === false || err) {
             error = err;
         }
         return error;

@@ -32,6 +32,7 @@ exports.writeStatsPagespeed = function(json, currentTimestamp, url) {
         ps.error(json.error.errors[0].message+': '+json.error.errors[0].reason);
         return;
     }
+    ps.error(false); // reset to false if no errors
 
     // create pagestat item
     var pagestatItem = {};
