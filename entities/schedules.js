@@ -1,24 +1,5 @@
-var mongo = require('mongodb');
-var getJson = require('../util/json');
-
-var Server = mongo.Server,
-    Db = mongo.Db,
-    BSON = mongo.BSONPure;
-
-var server = new Server('localhost', 27017, {auto_reconnect: true}),
-    db = new Db('wpomonitordb', server),
+var db = require('../util/db').open('schedules'),
     ps = require('../util/pagespeed');
-
-db.open(function(err, db) {
-    if(!err) {
-        console.log("Connected to 'wpomonitordb' database");
-        db.collection('schedules', {strict:true}, function(err, collection) {
-            if (err) {
-                console.log("The 'schedule' collection doesn't exist. Creating it with sample data...");
-            }
-        });
-    }
-});
 
 exports.writeStatsPagespeed = function(json, currentTimestamp, url) {
 
@@ -32,6 +13,7 @@ exports.writeStatsPagespeed = function(json, currentTimestamp, url) {
         ps.error(json.error.errors[0].message+': '+json.error.errors[0].reason);
         return;
     }
+    ps.error(false); // reset to false if no errors
 
     // create pagestat item
     var pagestatItem = {};
@@ -94,30 +76,22 @@ exports.addSchedule = function(req, res) {
         currentTimestamp = timestamp.current();
 
     // get data from pagespeed
-    if (!ps.error()) {
-        var get = {
-            host: 'www.googleapis.com',
-            path: '/pagespeedonline/v1/runPagespeed?url=' + encodeURIComponent(url) +
-                '&key=' + ps.key + '&strategy=' + ps.type + '&locale=' + ps.locale + '&prettyprint=false'
-        };
+    var get = {
+        host: 'www.googleapis.com',
+        path: '/pagespeedonline/v1/runPagespeed?url=' + encodeURIComponent(url) +
+            '&key=' + ps.key + '&strategy=' + ps.type + '&locale=' + ps.locale + '&prettyprint=false'
+    };
 
-        var output = '';
-
-        https.get(get, function(res){
-
-            res.on('data', function(chunk){
-                output += chunk;
-            });
-
-            res.on('end', function() {
-                var obj = JSON.parse(output);
-                exports.writeStatsPagespeed(obj, currentTimestamp, url);
-            });
-
+    var output = '';
+    https.get(get, function(res){
+        res.on('data', function(chunk){
+            output += chunk;
         });
-    } else {
-        console.log('Pagespeed skipped, update ./conf/pagespeed.js with your pagespeed key.');
-    }
+        res.on('end', function() {
+            var obj = JSON.parse(output);
+            exports.writeStatsPagespeed(obj, currentTimestamp, url);
+        });
+    });
 
     // get data from yslow
     var YSlowLib = require('yslowjs/lib/yslow'),

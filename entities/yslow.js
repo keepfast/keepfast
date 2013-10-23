@@ -1,23 +1,4 @@
-var mongo = require('mongodb');
-var getJson = require('../util/json');
-
-var Server = mongo.Server,
-    Db = mongo.Db,
-    BSON = mongo.BSONPure;
-
-var server = new Server('localhost', 27017, {auto_reconnect: true});
-db = new Db('wpomonitordb', server);
-
-db.open(function(err, db) {
-    if(!err) {
-        console.log("Connected to 'wpomonitordb' database");
-        db.collection('yslows', {strict:true}, function(err, collection) {
-            if (err) {
-                console.log("The 'yslows' collection doesn't exist. Creating it with sample data...");
-            }
-        });
-    }
-});
+var db = require('../util/db').open('yslows');
 
 exports.findById = function(req, res) {
     var id = req.params.id;
