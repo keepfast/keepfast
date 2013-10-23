@@ -5,6 +5,8 @@ var express = require('express'),
     swig = require('swig'),
     cons = require('consolidate');
 
+var ps = require('./util/pagespeed');
+
 // apps
 var profile = require('./entities/profiles'),
     pagespeed = require('./entities/pagespeeds'),
@@ -19,8 +21,6 @@ app.configure(function () {
     app.use(express.bodyParser());
     app.use(express.static(path.join(__dirname, 'public')));
 });
-
-var psHasKey = (require('./conf/pagespeed').key !== 'YOUR_KEY_HERE');
 
 //config templates
 var TEMPLATE_PATH = path.join(__dirname, 'public/templates');
@@ -38,17 +38,17 @@ swig.init({
 app.set('views', TEMPLATE_PATH);
 
 app.get('/', function (req, res) {
-    res.render('index.html', { foo: 'bar', pagespeed: psHasKey });
+    res.render('index.html', { psError: ps.error() });
 });
 
 // profile : crud
 app.get('/profile', function (req, res) {
-    res.render('profile.html', { pagespeed: psHasKey });
+    res.render('profile.html', { psError: ps.error() });
 });
 
 // profile : dashboard
 app.get('/dashboard/:urlProfile', function (req, res) {
-    res.render('dashboard.html', { urlProfile: req.params.urlProfile, pagespeed: psHasKey });
+    res.render('dashboard.html', { urlProfile: req.params.urlProfile, psError: ps.error() });
 });
 
 // profile : api
@@ -89,7 +89,7 @@ app.post('/schedule/:url', schedule.removeSchedulesByURL);
 
 //api docs
 app.get('/api', function (req, res) {
-    res.render('api.html', { pagespeed: psHasKey });
+    res.render('api.html', { psError: ps.error() });
 });
 
 app.listen(app.get('port'));
