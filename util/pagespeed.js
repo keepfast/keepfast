@@ -3,8 +3,8 @@ var error = false;
 
 module.exports = {
     key: config.key,
-    locale: config.locale,
-    type: config.type,
+    locale: config.locale || 'en',
+    type: config.type || 'desktop',
 
     error: function(err) {
         if (config.key === 'YOUR_KEY_HERE') {
