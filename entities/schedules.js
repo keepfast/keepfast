@@ -6,7 +6,8 @@ var Server = mongo.Server,
     BSON = mongo.BSONPure;
 
 var server = new Server('localhost', 27017, {auto_reconnect: true}),
-    db = new Db('wpomonitordb', server);
+    db = new Db('wpomonitordb', server),
+    ps = require('../util/pagespeed');
 
 db.open(function(err, db) {
     if(!err) {
@@ -28,6 +29,7 @@ exports.writeStatsPagespeed = function(json, currentTimestamp, url) {
 
     if (json.error) {
         console.trace(json.error);
+        ps.error(json.error.errors[0].message+': '+json.error.errors[0].reason);
         return;
     }
 
@@ -83,10 +85,7 @@ exports.writeStatsYslow = function(json, currentTimestamp, url) {
 exports.addSchedule = function(req, res) {
 
     var https = require('https'),
-        key = require('../conf/pagespeed').key,
-        url = decodeURIComponent(req.body.url),
-        locale = 'en',
-        type = 'desktop';
+        url = decodeURIComponent(req.body.url);
 
     console.log('Schedule for url: ', url);
 
@@ -95,11 +94,11 @@ exports.addSchedule = function(req, res) {
         currentTimestamp = timestamp.current();
 
     // get data from pagespeed
-    if (key !== 'YOUR_KEY_HERE') {
+    if (!ps.error()) {
         var get = {
             host: 'www.googleapis.com',
             path: '/pagespeedonline/v1/runPagespeed?url=' + encodeURIComponent(url) +
-                '&key=' + key + '&strategy=' + type + '&locale=' + locale + '&prettyprint=false'
+                '&key=' + ps.key + '&strategy=' + ps.type + '&locale=' + ps.locale + '&prettyprint=false'
         };
 
         var output = '';
@@ -162,4 +161,4 @@ exports.removeSchedulesByURL = function(req, res) {
     res.send({'status': "200",
               'msg': "removing"});
 
-};
+}
