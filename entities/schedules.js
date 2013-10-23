@@ -1,24 +1,5 @@
-var mongo = require('mongodb');
-var getJson = require('../util/json');
-
-var Server = mongo.Server,
-    Db = mongo.Db,
-    BSON = mongo.BSONPure;
-
-var server = new Server('localhost', 27017, {auto_reconnect: true}),
-    db = new Db('wpomonitordb', server, { safe: true }),
+var db = require('../util/db').open('schedules'),
     ps = require('../util/pagespeed');
-
-db.open(function(err, db) {
-    if(!err) {
-        console.log("Connected to 'wpomonitordb' database");
-        db.collection('schedules', {strict:true}, function(err, collection) {
-            if (err) {
-                console.log("The 'schedule' collection doesn't exist. Creating it with sample data...");
-            }
-        });
-    }
-});
 
 exports.writeStatsPagespeed = function(json, currentTimestamp, url) {
 
