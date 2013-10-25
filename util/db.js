@@ -1,7 +1,6 @@
 var mongo = require('mongodb');
 var Server = mongo.Server,
-    Db = mongo.Db,
-    BSON = mongo.BSONPure;
+    Db = mongo.Db;
 
 var server = new Server('localhost', 27017, {auto_reconnect: true});
 var db = new Db('wpomonitordb', server, { safe: true });

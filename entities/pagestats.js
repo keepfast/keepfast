@@ -1,3 +1,4 @@
+var BSON = require('mongodb').BSONPure;
 var db = require('../util/db').open('pagestats');
 
 exports.findById = function(req, res) {
@@ -25,6 +26,7 @@ exports.findByDate = function(req, res) {
 exports.findByURL = function(req, res) {
 
     var url = req.params.url;
+
     console.log('Retrieving pagestats: ' + url);
 
     db.collection('pagestats', function(err, collection) {
@@ -43,11 +45,8 @@ exports.findAll = function(req, res) {
 };
 
 exports.addPagestats = function(req, res) {
-
     var pagestats = req.body;
-
     console.log('Adding pagestats: ' + JSON.stringify(pagestats));
-
     db.collection('pagestats', function(err, collection) {
         collection.insert(pagestats, {safe:true}, function(err, result) {
 

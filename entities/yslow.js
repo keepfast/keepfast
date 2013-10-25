@@ -1,3 +1,4 @@
+var BSON = require('mongodb').BSONPure;
 var db = require('../util/db').open('yslows');
 
 exports.findById = function(req, res) {

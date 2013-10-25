@@ -17,7 +17,7 @@ exports.writeStatsPagespeed = function(json, currentTimestamp, url) {
 
     // create pagestat item
     var pagestatItem = {};
-        pagestatItem.body = {url: json.id,
+        pagestatItem.body = {url: url,
                              timestamp: currentTimestamp,
                              numberResources: json.pageStats.numberResources,
                              numberHosts: json.pageStats.numberHosts,
