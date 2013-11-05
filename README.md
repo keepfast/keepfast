@@ -31,6 +31,20 @@ git clone git@github.com:davidsonfellipe/keepfast.git
 cd keepfast
 ```
 
+4. Get one [API Key on Google Insights](https://developers.google.com/speed/docs/insights/v1/getting_started#auth):
+```bash
+cd keepfast
+```
+
+5. Add your Google API Key on file /conf/pagespeed.json:
+```javascript
+{
+    "key": "YOUR_KEY_HERE",
+    "locale": "en",
+    "type": "desktop"
+}
+```
+
 4. Install dependencies:
 ```bash
 sudo npm install
