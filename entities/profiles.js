@@ -1,22 +1,5 @@
-var mongo = require('mongodb');
-
-var Server = mongo.Server,
-    Db = mongo.Db,
-    BSON = mongo.BSONPure;
-
-var server = new Server('localhost', 27017, {auto_reconnect: true});
-db = new Db('wpomonitordb', server);
-
-db.open(function(err, db) {
-    if(!err) {
-        console.log("Connected to 'wpomonitordb' database");
-        db.collection('profiles', {strict:true}, function(err, collection) {
-            if (err) {
-                console.log("The 'profiles' collection doesn't exist. Creating it with sample data...");
-            }
-        });
-    }
-});
+var BSON = require('mongodb').BSONPure;
+var db = require('../util/db').open('profiles');
 
 exports.findById = function(req, res) {
     var id = req.params.id;

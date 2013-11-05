@@ -1,22 +1,5 @@
-var mongo = require('mongodb');
-
-var Server = mongo.Server,
-    Db = mongo.Db,
-    BSON = mongo.BSONPure;
-
-var server = new Server('localhost', 27017, {auto_reconnect: true});
-db = new Db('wpomonitordb', server);
-
-db.open(function(err, db) {
-    if(!err) {
-        console.log("Connected to 'wpomonitordb' database");
-        db.collection('pagestats', {strict:true}, function(err, collection) {
-            if (err) {
-                console.log("The 'pagestats' collection doesn't exist. Creating it with sample data...");
-            }
-        });
-    }
-});
+var BSON = require('mongodb').BSONPure;
+var db = require('../util/db').open('pagestats');
 
 exports.findById = function(req, res) {
     var id = req.params.id;
@@ -43,6 +26,7 @@ exports.findByDate = function(req, res) {
 exports.findByURL = function(req, res) {
 
     var url = req.params.url;
+
     console.log('Retrieving pagestats: ' + url);
 
     db.collection('pagestats', function(err, collection) {
@@ -61,11 +45,8 @@ exports.findAll = function(req, res) {
 };
 
 exports.addPagestats = function(req, res) {
-
     var pagestats = req.body;
-
     console.log('Adding pagestats: ' + JSON.stringify(pagestats));
-
     db.collection('pagestats', function(err, collection) {
         collection.insert(pagestats, {safe:true}, function(err, result) {
 
