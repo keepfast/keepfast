@@ -12,8 +12,7 @@ criteria for the entire development team. allowing
 ability to manage the history of changes in these indicators
 during the development cycle of the application. The main
 indicators will be time page load, page size,
-and the related degrees tools:
-pagespeed and yslow.
+and score related to pagespeed and yslow.
 
 ## Instructions
 
