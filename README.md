@@ -31,9 +31,6 @@ cd keepfast
 ```
 
 4. Get one [API Key on Google Insights](https://developers.google.com/speed/docs/insights/v1/getting_started#auth):
-```bash
-cd keepfast
-```
 
 5. Add your Google API Key on file /conf/pagespeed.json:
 ```javascript
