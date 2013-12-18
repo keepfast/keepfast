@@ -9,6 +9,10 @@
     width: 140px;
 }
 
+.last-sync {
+    width: 150px;
+}
+
 .wait .fui-time {
 
     -webkit-animation-name: spin;
