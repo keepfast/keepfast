@@ -1,4 +1,4 @@
-# Keepfast - a WPO Monitor
+# Keepfast - a WPO Monitor, Tool to monitor indicators of performance for webpages. 
 
 [![Dependency Status](https://david-dm.org/davidsonfellipe/keepfast.png)](https://david-dm.org/davidsonfellipe/keepfast)
 
