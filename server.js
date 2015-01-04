@@ -8,11 +8,11 @@ var express = require('express'),
 var ps = require('./util/pagespeed');
 
 // apps
-var profile = require('./entities/profiles'),
-    pagespeed = require('./entities/pagespeeds'),
-    pagestats = require('./entities/pagestats'),
-    yslow = require('./entities/yslow'),
-    schedule = require('./entities/schedules'),
+var profile = require('./api/profiles'),
+    pagespeed = require('./api/pagespeeds'),
+    pagestats = require('./api/pagestats'),
+    yslow = require('./api/yslow'),
+    schedule = require('./api/schedules'),
     app = express();
 
 app.configure(function () {

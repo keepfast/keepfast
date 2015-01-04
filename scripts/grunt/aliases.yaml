@@ -1,6 +1,5 @@
 default:
-  - 'build'
-  - 'connect'
+  - 'nodemon'
   - 'watch'
 
 build:
