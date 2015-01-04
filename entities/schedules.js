@@ -13,6 +13,7 @@ exports.writeStatsPagespeed = function(json, currentTimestamp, url) {
         ps.error(json.error.errors[0].message+': '+json.error.errors[0].reason);
         return;
     }
+
     ps.error(false); // reset to false if no errors
 
     // create pagestat item
@@ -35,7 +36,7 @@ exports.writeStatsPagespeed = function(json, currentTimestamp, url) {
     var pagespeedItem = {};
         pagespeedItem.body = {url: url,
                               timestamp: currentTimestamp,
-                              strategy: json.request.strategy,
+                              strategy: ps.type,
                               score: json.score};
 
     // insert items
@@ -78,8 +79,11 @@ exports.addSchedule = function(req, res) {
     // get data from pagespeed
     var get = {
         host: 'www.googleapis.com',
-        path: '/pagespeedonline/v1/runPagespeed?url=' + encodeURIComponent(url) +
-            '&key=' + ps.key + '&strategy=' + ps.type + '&locale=' + ps.locale + '&prettyprint=false'
+        path: '/pagespeedonline/v1/runPagespeed?url=' +
+              encodeURIComponent(url) +
+              '&key=' + ps.key +
+              '&strategy=' + ps.type +
+              '&locale=' + ps.locale + '&prettyprint=false'
     };
 
     var output = '';
@@ -120,7 +124,7 @@ exports.removeSchedulesByURL = function(req, res) {
 
     console.log('Removing for url: ', url);
 
-        // load interfaces with models
+    // load interfaces with models
     var yslow = require('./yslow');
     var pagespeed = require('./pagespeeds');
     var pagestat = require('./pagestats');
