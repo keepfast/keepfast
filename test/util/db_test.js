@@ -1,6 +1,7 @@
 var test = require('tape');
 var path = require('path');
 var root = path.join(__dirname, '..', '..');
+var confDB = require('../conf/db');
 
 // stub db open - so mongo doesn't have to
 // be present for unit tests to pass
@@ -17,6 +18,6 @@ test('util/db', function(t) {
     var dbc;
     t.ok(dbc = db.open('testcollection'));
 
-    t.equal(dbc.databaseName, 'wpomonitordb');
+    t.equal(dbc.databaseName, confDB.name);
     t.equal(dbc.options.safe, true);
 });
