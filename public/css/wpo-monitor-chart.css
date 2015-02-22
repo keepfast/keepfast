@@ -1,12 +1,12 @@
 .nv-x text {
     display: none;
 }
+
 .nv-x text.nv-axislabel {
     display: block;
 }
 
 .wait .fui-time {
-
     margin: 20px;
     width: 100px;
     height: 100px;
