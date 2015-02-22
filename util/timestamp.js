@@ -1,3 +1,3 @@
 exports.current = function() {
-        return new Date().getTime();
+    return new Date().getTime();
 };
