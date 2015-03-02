@@ -23,7 +23,7 @@ and score related to pagespeed and yslow.
 
 2. Clone the project:
 ```bash
-git clone git@github.com:davidsonfellipe/keepfast.git
+git clone https://github.com/davidsonfellipe/keepfast
 ```
 
 3. Go to folder:
