@@ -136,7 +136,7 @@ Profile.prototype.showAll = function () {
             var emptyEntry = '<tr>' +
                              '  <td colspan="3">' +
                              '      <p class="lead text-center"><strong>There are no Monitors yet...<br/>' +
-                             '          <a href="#box-form-profile" class="btn btn-primary btn-profile-add fui-plus" data-toggle="collapse"> Add one</a>' +
+                             '          <a href="#box-form-profile" class="btn btn-primary fui-plus" data-toggle="collapse"> Add one</a>' +
                              '      </strong></p>' +
                              '  </td>' +
                              '</tr>';
