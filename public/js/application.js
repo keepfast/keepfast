@@ -63,6 +63,25 @@ String.prototype.repeat = function(num) {
     // Switch
     $("[data-toggle='switch']").wrap('<div class="switch" />').parent().bootstrapSwitch();
     
+    // Selection of active menu entry
+    var found = false;
+    $('ul.nav').find('li a').each(function(index) {
+      if (this.href == location.href) {
+        $(this.parentElement).addClass('active');
+        found = true;
+        return false;
+      }
+    });
+    if (!found) {
+      var assoc = {
+        '/dashboard': '/profile'
+      };
+      for (var path in assoc) {
+        if (location.pathname.indexOf(path) === 0) {
+          $('ul.nav a[href="' + assoc[path] + '"]').parent().addClass('active');
+        } 
+      }
+    }
   });
   
 })(jQuery);
