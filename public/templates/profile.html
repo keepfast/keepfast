@@ -20,11 +20,11 @@
   <form class="form-profile" action="">
     <fieldset>
       <label>url</label>
-      <input type="text" name="url" placeholder="Type a url…">
-      <label>email</label>
-      <input type="text" name="email" placeholder="Type a email...">
-      <label>thumbnail</label>
-      <input type="text" name="thumbnail" placeholder="Type a url...">
+        <input type="url" name="url" placeholder="http://..." required title="Use a complete URL, including the protocol">
+        <label>email</label>
+        <input type="email" name="email" placeholder="you@domain.com" required>
+        <label>thumbnail</label>
+        <input type="url" name="thumbnail" placeholder="A cool thumbnail URL">
       <button type="submit" class="btn btn-profile-add-submit">Submit</button>
     </fieldset>
   </form>
