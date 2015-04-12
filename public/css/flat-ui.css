@@ -3659,11 +3659,11 @@ body.vjs-full-window {
   right: 0;
   top: 0;
 }
+table .btn-profile-add {
+  position: relative;
+}
 .btn-profile-add-submit {
   margin-top: -9px;
-}
-.form-profile {
-  display: none;
 }
 .btn-profile-alert {
   margin-bottom: 10px;

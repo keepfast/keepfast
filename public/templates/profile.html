@@ -10,24 +10,24 @@
     Profile
   </h1>
   <div class="span1 btn-profile-add">
-    <a href="#fakelink" class="btn btn-large btn-block btn-primary">
-      <span class="fui-plus"></span>
-    </a>
+    <a href="#box-form-profile" class="btn btn-large btn-block btn-primary fui-plus" data-toggle="collapse"></a>
   </div>
 
   <button class="btn btn-large btn-block btn-profile btn-profile-alert"></button>
 
-  <form class="form-profile" action="">
-    <fieldset>
-      <label>url</label>
-      <input type="text" name="url" placeholder="Type a url…">
-      <label>email</label>
-      <input type="text" name="email" placeholder="Type a email...">
-      <label>thumbnail</label>
-      <input type="text" name="thumbnail" placeholder="Type a url...">
-      <button type="submit" class="btn btn-profile-add-submit">Submit</button>
-    </fieldset>
-  </form>
+  <div id="box-form-profile" class="collapse">
+    <form class="form-profile" action="">
+      <fieldset>
+        <label>url</label>
+        <input type="text" name="url" placeholder="Type a url…">
+        <label>email</label>
+        <input type="text" name="email" placeholder="Type a email...">
+        <label>thumbnail</label>
+        <input type="text" name="thumbnail" placeholder="Type a url...">
+        <button type="submit" class="btn btn-profile-add-submit">Submit</button>
+      </fieldset>
+    </form>
+  </div>
 
   <table id="profiles-table" class="table table-bordered table-striped table-condensed">
     <thead>
@@ -38,6 +38,11 @@
         </tr>
     </thead>
     <tbody id="profile-tbody">
+      <tr>
+        <td colspan="3">
+          <p class="lead text-center"><strong>Loading monitors...</strong></p>
+        </td>
+      </tr>
     </tbody>
   </table>
 {% endblock %}
