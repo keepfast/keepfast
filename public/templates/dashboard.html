@@ -1,130 +1,151 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-  <h1 id="title-current-profile">{{ urlProfile }}</h1>
+  <h1 id="title-current-profile">Scores for <a href="#fakelink">{{ urlProfile }}</a></h1>
 
-  <legend>Current</legend>
   <div class="row demo-tiles">
-    <div class="span3">
-      <div class="tile">
-        <h3 class="tile-title">Page Speed</h3>
-        <p id="connections-pagespeed" style="font-size: 96px;line-height: 96px;">0</p>
-        <span class="palette palette-turquoise">Score</span>
-      </div>
-    </div>
 
-    <div class="span3">
-      <div class="tile">
-        <h3 class="tile-title">Yslow</h3>
-        <p id="connections-yslow" style="font-size: 96px;line-height: 96px;">0</p>
-        <span class="palette palette-turquoise">Score</span>
-      </div>
-    </div>
+    <div class="span12">
+      <div class="row">
 
-    <div class="span3">
-      <div class="tile">
-        <h3 class="tile-title">Time to load</h3>
-        <p id="connections-timetoload" style="font-size: 96px;line-height: 96px;">0</p>
-        <span class="palette palette-turquoise">Seconds</span>
-      </div>
-    </div>
+        <div class="span3">
+          <div class="tile">
+            <h3 class="tile-title">Page Speed</h3>
+            <p id="connections-pagespeed" style="font-size: 96px;line-height: 96px;">0</p>
+            <span class="palette palette-turquoise">Score</span>
+          </div>
+        </div>
 
-    <div class="span3">
-      <div class="tile">
-        <h3 class="tile-title">Size</h3>
-        <p id="connections-size" style="font-size: 96px;line-height: 96px;">0</p>
-        <span class="palette palette-turquoise">MB</span>
-      </div>
-    </div>
+        <div class="span3">
+          <div class="tile">
+            <h3 class="tile-title">Yslow</h3>
+            <p id="connections-yslow" style="font-size: 96px;line-height: 96px;">0</p>
+            <span class="palette palette-turquoise">Score</span>
+          </div>
+        </div>
 
-    <div class="span9">
-        <br>
-        <legend>Page speed</legend>
-        <section class="info" id="chart-pagespeed" style="float: left;">
+        <div class="span3">
+          <div class="tile">
+            <h3 class="tile-title">Time to load</h3>
+            <p id="connections-timetoload" style="font-size: 96px;line-height: 96px;">0</p>
+            <span class="palette palette-turquoise">Seconds</span>
+          </div>
+        </div>
+
+        <div class="span3">
+          <div class="tile">
+            <h3 class="tile-title">Size</h3>
+            <p id="connections-size" style="font-size: 96px;line-height: 96px;">0</p>
+            <span class="palette palette-turquoise">MB</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="span12">
+          <legend>Page speed</legend>
+          <section class="info" id="chart-pagespeed" style="float: left;">
             <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-        </section>
+          </section>
+        </div>
+      </div>
 
-        <legend>Yslow</legend>
-        <section class="info" id="chart-yslow" style="float: left;">
+      <div class="row">
+        <div class="span12">
+          <legend>Yslow</legend>
+          <section class="info" id="chart-yslow" style="float: left;">
             <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-        </section>
-
-        <legend>Page Stats &gt; number of resources</legend>
-        <div class="row-fluid">
-            <section class="info" id="chart-numberResources" style="float: left;">
-                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-            </section>
+          </section>
         </div>
 
-        <legend>Page Stats &gt; number of hosts</legend>
-        <div class="row-fluid">
-            <section class="info" id="chart-numberHosts" style="float: left;">
-                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-            </section>
-        </div>
+      </div>
+    </div>
 
-        <legend>Page Stats &gt; number of total requests bytes</legend>
-        <div class="row-fluid">
-            <section class="info" id="chart-totalRequestBytes" style="float: left;">
-                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-            </section>
-        </div>
+  </div>
 
-        <legend>Page Stats &gt; number of css requests bytes</legend>
-        <div class="row-fluid">
-            <section class="info" id="chart-cssResponseBytes" style="float: left;">
-                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-            </section>
-        </div>
 
-        <legend>Page Stats &gt; number of html requests bytes</legend>
-        <div class="row-fluid">
-            <section class="info" id="chart-htmlResponseBytes" style="float: left;">
-                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-            </section>
-        </div>
+  <h2>Page statistics</h2>
+  <div class="row">
+    <div class="span12">
 
-        <legend>Page Stats &gt; number of image response bytes</legend>
-        <div class="row-fluid">
-            <section class="info" id="chart-imageResponseBytes" style="float: left;">
-                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-            </section>
-        </div>
+      <legend>Resources</legend>
+      <div class="row-fluid">
+          <section class="info" id="chart-numberResources" style="float: left;">
+              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+          </section>
+      </div>
 
-        <legend>Page Stats &gt; number of static resources bytes</legend>
-        <div class="row-fluid">
-            <section class="info" id="chart-numberStaticResources" style="float: left;">
-                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-            </section>
-        </div>
+      <legend>Hosts</legend>
+      <div class="row-fluid">
+          <section class="info" id="chart-numberHosts" style="float: left;">
+              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+          </section>
+      </div>
 
-        <legend>Page Stats &gt; number of javascript response bytes</legend>
-        <div class="row-fluid">
-            <section class="info" id="chart-javascriptResponseBytes" style="float: left;">
-                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-            </section>
-        </div>
+      <legend>Static resources</legend>
+      <div class="row-fluid">
+          <section class="info" id="chart-numberStaticResources" style="float: left;">
+              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+          </section>
+      </div>
 
-        <legend>Page Stats &gt; number of other response bytes</legend>
-        <div class="row-fluid">
-            <section class="info" id="chart-otherResponseBytes" style="float: left;">
-                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-            </section>
-        </div>
+      <legend>Script resources</legend>
+      <div class="row-fluid">
+          <section class="info" id="chart-numberJsResources" style="float: left;">
+              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+          </section>
+      </div>
 
-        <legend>Page Stats &gt; number of javascript response bytes</legend>
-        <div class="row-fluid">
-            <section class="info" id="chart-numberJsResources" style="float: left;">
-                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-            </section>
-        </div>
+      <legend>Style resources</legend>
+      <div class="row-fluid">
+          <section class="info" id="chart-numberCssResources" style="float: left;">
+              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+          </section>
+      </div>
 
-        <legend>Page Stats &gt; number of css response bytes</legend>
-        <div class="row-fluid">
-            <section class="info" id="chart-numberCssResources" style="float: left;">
-                <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-            </section>
-        </div>
+      <legend>Total page weight</legend>
+      <div class="row-fluid">
+          <section class="info" id="chart-totalRequestBytes" style="float: left;">
+              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+          </section>
+      </div>
+
+      <legend>Total CSS weight</legend>
+      <div class="row-fluid">
+          <section class="info" id="chart-cssResponseBytes" style="float: left;">
+              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+          </section>
+      </div>
+
+      <legend>Total markup weight</legend>
+      <div class="row-fluid">
+          <section class="info" id="chart-htmlResponseBytes" style="float: left;">
+              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+          </section>
+      </div>
+
+      <legend>Total images weight</legend>
+      <div class="row-fluid">
+          <section class="info" id="chart-imageResponseBytes" style="float: left;">
+              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+          </section>
+      </div>
+
+      <legend>Total scripts weight</legend>
+      <div class="row-fluid">
+          <section class="info" id="chart-javascriptResponseBytes" style="float: left;">
+              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+          </section>
+      </div>
+
+      <legend>Total weight of other resources</legend>
+      <div class="row-fluid">
+          <section class="info" id="chart-otherResponseBytes" style="float: left;">
+              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
+          </section>
+      </div>
+
     </div>
   </div>
 {% endblock %}

@@ -7,7 +7,7 @@ function getChart(colorRGBA, items, timestamps, svgId, labelTop) {
         chart = nv.models.lineChart();
 
         chart.xAxis
-            .axisLabel('Mouse over the points to details')
+            .axisLabel('Mouse over the points for details')
             .rotateLabels(0)
             .tickFormat(function(d) {
 
