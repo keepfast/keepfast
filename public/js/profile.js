@@ -55,10 +55,6 @@ Profile.prototype.bind = function() {
 
     var that = this;
 
-    $('.btn-profile-add').on('click', function(){
-        $('.form-profile').slideToggle('slow');
-    });
-
     $(".form-profile").on('submit', function(event){
 
         event.preventDefault();
@@ -136,41 +132,47 @@ Profile.prototype.showAll = function () {
 
     $.getJSON('/profile.json', function (data) {
 
-        var items = {
-            emails: [],
-            urls: []
-        };
+        if (data.length === 0) {
+            var $alert = $('#profile-tbody .lead');
+            $alert.find('strong').text('There are no monitors yet');
+            $alert.append('<br/><a href="#box-form-profile" class="btn btn-primary fui-plus" data-toggle="collapse"> Add one</a>');
+        } else {
+            var items = {
+                emails: [],
+                urls: []
+            };
 
-        var HTMLTOOLBAR = '<div class="btn-toolbar">' +
-                          '  <div class="btn-group">' +
-                          '    <a class="btn btn-primary profile-schedule-analytics" href="/schedule" data-url="%URLENCODED%"><i class="fui-time"></i></a>' +
-                          '    <a class="btn btn-primary active profile-schedule-remove" href="/schedule/%URLENCODED%"><i class="fui-cross"></i></a>' +
-                          '    <a class="btn btn-primary" href="/dashboard/%URLENCODED%"><i class="fui-eye"></i></a>' +
-                          '  </div>' +
-                          '</div>';
+            var HTMLTOOLBAR = '<div class="btn-toolbar">' +
+                              '  <div class="btn-group">' +
+                              '    <a class="btn btn-primary profile-schedule-analytics" href="/schedule" data-url="%URLENCODED%"><i class="fui-time"></i></a>' +
+                              '    <a class="btn btn-primary active profile-schedule-remove" href="/schedule/%URLENCODED%"><i class="fui-cross"></i></a>' +
+                              '    <a class="btn btn-primary" href="/dashboard/%URLENCODED%"><i class="fui-eye"></i></a>' +
+                              '  </div>' +
+                              '</div>';
 
-        var HTML = '<tr>' +
-                   '   <td>'+
-                   '    <a href="/dashboard/%URLENCODED%"><span class="fui-eye"></span> ' + '%URL%</a>' +
-                   '   </td>' +
-                   '   <td>%EMAIL%</td>' +
-                   '   <td style="width: 145px; font-size: 1px;">' +
-                   HTMLTOOLBAR +
-                   '   </td>' +
-                   '</tr>',
-            HTMLinserted = '';
+            var HTML = '<tr>' +
+                       '   <td>'+
+                       '    <a href="/dashboard/%URLENCODED%"><span class="fui-eye"></span> ' + '%URL%</a>' +
+                       '   </td>' +
+                       '   <td>%EMAIL%</td>' +
+                       '   <td style="width: 145px; font-size: 1px;">' +
+                       HTMLTOOLBAR +
+                       '   </td>' +
+                       '</tr>';
+            var HTMLinserted = '';
 
 
-        $.each(data, function(key, val) {
-            HTMLinserted += HTML.replace('%URL%', val.url)
-                                .replace('%URLENCODED%', encodeURIComponent(val.url))
-                                .replace('%URLENCODED%', encodeURIComponent(val.url))
-                                .replace('%URLENCODED%', encodeURIComponent(val.url))
-                                .replace('%URLENCODED%', encodeURIComponent(val.url))
-                                .replace('%EMAIL%', val.email);
-        });
+            $.each(data, function(key, val) {
+                HTMLinserted += HTML.replace('%URL%', val.url)
+                                    .replace('%URLENCODED%', encodeURIComponent(val.url))
+                                    .replace('%URLENCODED%', encodeURIComponent(val.url))
+                                    .replace('%URLENCODED%', encodeURIComponent(val.url))
+                                    .replace('%URLENCODED%', encodeURIComponent(val.url))
+                                    .replace('%EMAIL%', val.email);
+            });
 
-        $('#profile-tbody').html(HTMLinserted);
+            $('#profile-tbody').html(HTMLinserted);
+        }
     });
 
 };

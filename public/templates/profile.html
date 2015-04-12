@@ -10,33 +10,33 @@
     Profile
   </h1>
   <div class="span1 btn-profile-add">
-    <a href="#fakelink" class="btn btn-large btn-block btn-primary">
-      <span class="fui-plus"></span>
-    </a>
+    <a href="#box-form-profile" class="btn btn-large btn-block btn-primary fui-plus" data-toggle="collapse"></a>
   </div>
 
   <button class="btn btn-large btn-block btn-profile btn-profile-alert"></button>
 
-  <form class="form-profile" action="">
-    <div class="form-group">
-      <label for="url">Page URL</label>
-      <input type="url" id="url" name="url" placeholder="http://..." required title="Use a complete URL, including the protocol" class="form-control">
-    </div>
-      
-    <div class="form-group">
-      <label for="email">Notify e-mail</label>
-      <input type="email" id="email" name="email" placeholder="you@domain.com" required class="form-control">
-    </div>
+  <div id="box-form-profile" class="collapse">
+    <form class="form-profile" action="">
+      <div class="form-group">
+        <label for="url">Page URL</label>
+        <input type="url" id="url" name="url" placeholder="http://..." required title="Use a complete URL, including the protocol" class="form-control">
+      </div>
+        
+      <div class="form-group">
+        <label for="email">Notify e-mail</label>
+        <input type="email" id="email" name="email" placeholder="you@domain.com" required class="form-control">
+      </div>
 
-    <div class="form-group">
-      <label for="thumbnail">Page thumbnail</label>
-      <input type="url" id="thumbnail" name="thumbnail" placeholder="A cool thumbnail URL" class="form-control">
-    </div>
+      <div class="form-group">
+        <label for="thumbnail">Page thumbnail</label>
+        <input type="url" id="thumbnail" name="thumbnail" placeholder="A cool thumbnail URL" class="form-control">
+      </div>
 
-    <div class="form-group">
-      <button type="submit" class="btn btn-profile-add-submit">Submit</button>
-    </div>
-  </form>
+      <div class="form-group">
+        <button type="submit" class="btn btn-profile-add-submit">Submit</button>
+      </div>
+    </form>
+  </div>
 
   <table id="profiles-table" class="table table-bordered table-striped table-condensed">
     <thead>
@@ -47,6 +47,11 @@
         </tr>
     </thead>
     <tbody id="profile-tbody">
+      <tr>
+        <td colspan="3">
+          <p class="lead text-center"><strong>Loading monitors...</strong></p>
+        </td>
+      </tr>
     </tbody>
   </table>
 {% endblock %}
