@@ -133,7 +133,9 @@ Profile.prototype.showAll = function () {
     $.getJSON('/profile.json', function (data) {
 
         if (data.length === 0) {
-            $('#profile-tbody .lead strong').text('There are no monitors yet');
+            var $alert = $('#profile-tbody .lead');
+            $alert.find('strong').text('There are no monitors yet');
+            $alert.append('<br/><a href="#box-form-profile" class="btn btn-primary fui-plus" data-toggle="collapse"> Add one</a>');
         } else {
             var items = {
                 emails: [],
