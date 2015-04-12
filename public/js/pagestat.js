@@ -25,8 +25,9 @@ Pagestat.prototype.getTotalBytesTransferred = function() {
 
 Pagestat.prototype.getAllbyURL = function(url) {
 
-    var router = '/pagestats/url/%url%/all.json'.replace('%url%', url),
-        that = this;
+    var router = '/pagestats/url/%url%/all.json'.replace('%url%', url);
+    var that = this;
+    var decoded_url = decodeURIComponent(url);
 
     $.getJSON(router, function(data) {
 
@@ -47,7 +48,7 @@ Pagestat.prototype.getAllbyURL = function(url) {
                     numberResources: []
                     };
 
-        $('#title-current-profile').html(decodeURIComponent(url));
+        $('#title-current-profile a').attr('href', decoded_url).html(decoded_url);
 
         $.each(data, function(key, val) {
             items.numberResources.push(val.numberResources);
