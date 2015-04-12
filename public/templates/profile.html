@@ -18,15 +18,24 @@
   <button class="btn btn-large btn-block btn-profile btn-profile-alert"></button>
 
   <form class="form-profile" action="">
-    <fieldset>
-      <label>url</label>
-        <input type="url" name="url" placeholder="http://..." required title="Use a complete URL, including the protocol">
-        <label>email</label>
-        <input type="email" name="email" placeholder="you@domain.com" required>
-        <label>thumbnail</label>
-        <input type="url" name="thumbnail" placeholder="A cool thumbnail URL">
+    <div class="form-group">
+      <label for="url">Page URL</label>
+      <input type="url" id="url" name="url" placeholder="http://..." required title="Use a complete URL, including the protocol" class="form-control">
+    </div>
+      
+    <div class="form-group">
+      <label for="email">Notify e-mail</label>
+      <input type="email" id="email" name="email" placeholder="you@domain.com" required class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="thumbnail">Page thumbnail</label>
+      <input type="url" id="thumbnail" name="thumbnail" placeholder="A cool thumbnail URL" class="form-control">
+    </div>
+
+    <div class="form-group">
       <button type="submit" class="btn btn-profile-add-submit">Submit</button>
-    </fieldset>
+    </div>
   </form>
 
   <table id="profiles-table" class="table table-bordered table-striped table-condensed">
