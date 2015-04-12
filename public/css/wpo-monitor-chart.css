@@ -1,9 +1,14 @@
-.nv-x text {
-    display: none;
+.tile p {
+    font-size: 96px;
+    line-height: 96px;
 }
-
-.nv-x text.nv-axislabel {
-    display: block;
+.chart {
+    margin-left: -15px;
+    margin-bottom: 30px;
+    height: 200px;
+}
+#chart-history {
+    margin-top: 20px;
 }
 
 .wait .fui-time {

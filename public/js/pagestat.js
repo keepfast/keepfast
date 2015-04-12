@@ -27,28 +27,24 @@ Pagestat.prototype.getAllbyURL = function(url) {
 
     var router = '/pagestats/url/%url%/all.json'.replace('%url%', url);
     var that = this;
-    var decoded_url = decodeURIComponent(url);
 
     $.getJSON(router, function(data) {
-
         var items = {
-                    scores: [],
-                    dates: [],
-                    timestamps: [],
-                    numberHosts: [],
-                    totalRequestBytes: [],
-                    numberStaticResources: [],
-                    htmlResponseBytes: [],
-                    cssResponseBytes: [],
-                    imageResponseBytes: [],
-                    javascriptResponseBytes: [],
-                    otherResponseBytes: [],
-                    numberJsResources: [],
-                    numberCssResources: [],
-                    numberResources: []
-                    };
-
-        $('#title-current-profile a').attr('href', decoded_url).html(decoded_url);
+            scores: [],
+            dates: [],
+            timestamps: [],
+            numberHosts: [],
+            totalRequestBytes: [],
+            numberStaticResources: [],
+            htmlResponseBytes: [],
+            cssResponseBytes: [],
+            imageResponseBytes: [],
+            javascriptResponseBytes: [],
+            otherResponseBytes: [],
+            numberJsResources: [],
+            numberCssResources: [],
+            numberResources: []
+        };
 
         $.each(data, function(key, val) {
             items.numberResources.push(val.numberResources);
@@ -77,27 +73,70 @@ Pagestat.prototype.getAllbyURL = function(url) {
 
         $('#connections-size').html(total.toFixed(fix));
 
-        getChart('#34495E', items.numberResources, items.timestamps, '#chart-numberResources', "numberResources");
+        var colors = { //based on FlatUI swatches
+            total: '#34495E', //wet asphalt
+            html: '#F1C40F', //sunflower
+            css: '#16A085', //green sea
+            js: '#C0392B', //pomegranate
+            img: '#2980B9', //belize hole
+            requests: '#9B59B6', //amethyst
+            others: '#95A5A6' //concrete
+        }
 
-        getChart('#34495E', items.numberHosts, items.timestamps, '#chart-numberHosts', "numberHosts");
+        getChart({
+            label: 'Hosts',
+            color: '#34495E',
+            points: items.numberHosts,
+            timestamps: items.timestamps
+        }, '#chart-numberHosts');
+        
+        getChart([
+            {
+                label: 'Total',
+                color: colors.total,
+                points: items.numberResources
+            }, {
+                label: 'Static (cacheable)',
+                color: colors.others,
+                points: items.numberStaticResources
+            }, {
+                label: 'Style resources',
+                color: colors.css,
+                points: items.numberCssResources
+            }, {
+                label: 'Script resources',
+                color: colors.js,
+                points: items.numberJsResources
+            }
+        ], '#chart-numberResources', items.timestamps);
 
-        getChart('#34495E', items.totalRequestBytes, items.timestamps, '#chart-totalRequestBytes', "totalRequestBytes");
-
-        getChart('#34495E', items.cssResponseBytes, items.timestamps, '#chart-cssResponseBytes', "cssResponseBytes");
-
-        getChart('#34495E', items.htmlResponseBytes, items.timestamps, '#chart-htmlResponseBytes', "htmlResponseBytes");
-
-        getChart('#34495E', items.imageResponseBytes, items.timestamps, '#chart-imageResponseBytes', "imageResponseBytes");
-
-        getChart('#34495E', items.numberStaticResources, items.timestamps, '#chart-numberStaticResources', "numberStaticResources");
-
-        getChart('#34495E', items.javascriptResponseBytes, items.timestamps, '#chart-javascriptResponseBytes', "javascriptResponseBytes");
-
-        getChart('#34495E', items.otherResponseBytes, items.timestamps, '#chart-otherResponseBytes', "otherResponseBytes");
-
-        getChart('#34495E', items.numberJsResources, items.timestamps, '#chart-numberJsResources', "numberJsResources");
-
-        getChart('#34495E', items.numberCssResources, items.timestamps, '#chart-numberCssResources', "numberCssResources");
+        getChart([
+            {
+                label: 'Markup',
+                color: colors.html,
+                points: items.htmlResponseBytes
+            }, {
+                label: 'Styles',
+                color: colors.css,
+                points: items.cssResponseBytes
+            }, {
+                label: 'Scripts',
+                color: colors.js,
+                points: items.javascriptResponseBytes
+            }, {
+                label: 'Images',
+                color: colors.img,
+                points: items.imageResponseBytes
+            },{
+                label: 'Requests',
+                color: colors.requests,
+                points: items.totalRequestBytes
+            }, {
+                label: 'Others',
+                color: colors.others,
+                points: items.numberStaticResources
+            }
+        ], '#chart-weightResources', items.timestamps);
     });
 
 };

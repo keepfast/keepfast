@@ -1,149 +1,49 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-  <h1 id="title-current-profile">Scores for <a href="#fakelink">{{ urlProfile }}</a></h1>
+  <h1 id="title-current-profile">Scores for <a href="{{ urlProfile }}">{{ urlProfile }}</a></h1>
 
-  <div class="row demo-tiles">
-
+  <div class="row">
     <div class="span12">
       <div class="row">
-
-        <div class="span3">
-          <div class="tile">
-            <h3 class="tile-title">Page Speed</h3>
-            <p id="connections-pagespeed" style="font-size: 96px;line-height: 96px;">0</p>
-            <span class="palette palette-turquoise">Score</span>
+        {% set tiles = ['PageSpeed', 'YSlow', 'Time to load', 'Size'] %}
+        {% for tile in tiles %}
+          <div class="span3">
+            <div class="tile">
+              <h3 class="tile-title">{{ tile }}</h3>
+              <p id="connections-{{ tile|lower|replace(' ','','g') }}">0</p>
+              <span class="palette palette-turquoise">Score</span>
+            </div>
           </div>
-        </div>
-
-        <div class="span3">
-          <div class="tile">
-            <h3 class="tile-title">Yslow</h3>
-            <p id="connections-yslow" style="font-size: 96px;line-height: 96px;">0</p>
-            <span class="palette palette-turquoise">Score</span>
-          </div>
-        </div>
-
-        <div class="span3">
-          <div class="tile">
-            <h3 class="tile-title">Time to load</h3>
-            <p id="connections-timetoload" style="font-size: 96px;line-height: 96px;">0</p>
-            <span class="palette palette-turquoise">Seconds</span>
-          </div>
-        </div>
-
-        <div class="span3">
-          <div class="tile">
-            <h3 class="tile-title">Size</h3>
-            <p id="connections-size" style="font-size: 96px;line-height: 96px;">0</p>
-            <span class="palette palette-turquoise">MB</span>
-          </div>
-        </div>
-
+        {% endfor %}
       </div>
 
       <div class="row">
         <div class="span12">
-          <legend>Page speed</legend>
-          <section class="info" id="chart-pagespeed" style="float: left;">
-            <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-          </section>
+          <svg class="chart" id="chart-history"/>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="span12">
-          <legend>Yslow</legend>
-          <section class="info" id="chart-yslow" style="float: left;">
-            <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-          </section>
-        </div>
-
       </div>
     </div>
-
   </div>
 
 
-  <h2>Page statistics</h2>
   <div class="row">
     <div class="span12">
+      <h2>Page statistics</h2>
 
-      <legend>Resources</legend>
+      <legend>Number of resources</legend>
       <div class="row-fluid">
-          <section class="info" id="chart-numberResources" style="float: left;">
-              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-          </section>
+        <svg class="chart" id="chart-numberResources"/>
       </div>
 
-      <legend>Hosts</legend>
+      <legend>Transferred bytes</legend>
       <div class="row-fluid">
-          <section class="info" id="chart-numberHosts" style="float: left;">
-              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-          </section>
+        <svg class="chart" id="chart-weightResources"/>
       </div>
 
-      <legend>Static resources</legend>
+      <legend>Unique hosts</legend>
       <div class="row-fluid">
-          <section class="info" id="chart-numberStaticResources" style="float: left;">
-              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-          </section>
-      </div>
-
-      <legend>Script resources</legend>
-      <div class="row-fluid">
-          <section class="info" id="chart-numberJsResources" style="float: left;">
-              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-          </section>
-      </div>
-
-      <legend>Style resources</legend>
-      <div class="row-fluid">
-          <section class="info" id="chart-numberCssResources" style="float: left;">
-              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-          </section>
-      </div>
-
-      <legend>Total page weight</legend>
-      <div class="row-fluid">
-          <section class="info" id="chart-totalRequestBytes" style="float: left;">
-              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-          </section>
-      </div>
-
-      <legend>Total CSS weight</legend>
-      <div class="row-fluid">
-          <section class="info" id="chart-cssResponseBytes" style="float: left;">
-              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-          </section>
-      </div>
-
-      <legend>Total markup weight</legend>
-      <div class="row-fluid">
-          <section class="info" id="chart-htmlResponseBytes" style="float: left;">
-              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-          </section>
-      </div>
-
-      <legend>Total images weight</legend>
-      <div class="row-fluid">
-          <section class="info" id="chart-imageResponseBytes" style="float: left;">
-              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-          </section>
-      </div>
-
-      <legend>Total scripts weight</legend>
-      <div class="row-fluid">
-          <section class="info" id="chart-javascriptResponseBytes" style="float: left;">
-              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-          </section>
-      </div>
-
-      <legend>Total weight of other resources</legend>
-      <div class="row-fluid">
-          <section class="info" id="chart-otherResponseBytes" style="float: left;">
-              <svg class="chart" style="width: 900px; margin-left: -20px;"></svg>
-          </section>
+        <svg class="chart" id="chart-numberHosts"/>
       </div>
 
     </div>
@@ -153,7 +53,7 @@
 {% block css %}
   {% parent %}
     <!-- vendor styles -->
-    <link rel="stylesheet" href="/css/nvd3/nv.d3.css">
+    <link rel="stylesheet" href="/css/nvd3/nv.d3.min.css">
     <link rel="stylesheet" href="/css/wpo-monitor-chart.css">
 {% endblock %}
 
@@ -172,26 +72,15 @@
   <script src="/lib/nvd3/models/lineChart.js"></script>
 
   <script src="/js/chart.js"></script>
+  <script src="/js/scores.js"></script>
   <script src="/js/pagestat.js"></script>
-  <script src="/js/pagespeed.js"></script>
-  <script src="/js/yslow.js"></script>
 
   <script>
     $(document).ready(function(){
-
-        // load pagespeed
-        var pagespeed = new Pagespeed();
-
-        pagespeed.runner('{{ urlProfile }}');
-
-        // load yslow
-        var yslow = new Yslow();
-
-        yslow.runner('{{ urlProfile }}');
-
-        // load pagestat
+        var scores = new Scores();
         var pagestat = new Pagestat();
 
+        scores.runner('{{ urlProfile }}');
         pagestat.runner('{{ urlProfile }}');
     });
   </script>

@@ -1,22 +1,24 @@
-nv.models.lineChart = function() {
+
+nv.models.historicalBarChart = function(bar_model) {
     "use strict";
 
     //============================================================
     // Public Variables with Default Settings
     //------------------------------------------------------------
 
-    var lines = nv.models.line()
+    var bars = bar_model || nv.models.historicalBar()
         , xAxis = nv.models.axis()
         , yAxis = nv.models.axis()
         , legend = nv.models.legend()
         , interactiveLayer = nv.interactiveGuideline()
         ;
 
-    var margin = {top: 30, right: 20, bottom: 50, left: 60}
+
+    var margin = {top: 30, right: 90, bottom: 50, left: 90}
         , color = nv.utils.defaultColor()
         , width = null
         , height = null
-        , showLegend = true
+        , showLegend = false
         , showXAxis = true
         , showYAxis = true
         , rightAlignYAxis = false
@@ -28,11 +30,11 @@ nv.models.lineChart = function() {
         }
         , x
         , y
-        , state = nv.utils.state()
+        , state = {}
         , defaultState = null
         , noData = 'No Data Available.'
         , dispatch = d3.dispatch('tooltipShow', 'tooltipHide', 'stateChange', 'changeState', 'renderEnd')
-        , duration = 250
+        , transitionDuration = 250
         ;
 
     xAxis
@@ -40,7 +42,7 @@ nv.models.lineChart = function() {
         .tickPadding(7)
     ;
     yAxis
-        .orient((rightAlignYAxis) ? 'right' : 'left')
+        .orient( (rightAlignYAxis) ? 'right' : 'left')
     ;
 
     //============================================================
@@ -48,41 +50,36 @@ nv.models.lineChart = function() {
     //------------------------------------------------------------
 
     var showTooltip = function(e, offsetElement) {
+
+        // New addition to calculate position if SVG is scaled with viewBox, may move TODO: consider implementing everywhere else
+        if (offsetElement) {
+            var svg = d3.select(offsetElement).select('svg');
+            var viewBox = (svg.node()) ? svg.attr('viewBox') : null;
+            if (viewBox) {
+                viewBox = viewBox.split(' ');
+                var ratio = parseInt(svg.style('width')) / viewBox[2];
+                e.pos[0] = e.pos[0] * ratio;
+                e.pos[1] = e.pos[1] * ratio;
+            }
+        }
+
         var left = e.pos[0] + ( offsetElement.offsetLeft || 0 ),
             top = e.pos[1] + ( offsetElement.offsetTop || 0),
-            x = xAxis.tickFormat()(lines.x()(e.point, e.pointIndex)),
-            y = yAxis.tickFormat()(lines.y()(e.point, e.pointIndex)),
+            x = xAxis.tickFormat()(bars.x()(e.point, e.pointIndex)),
+            y = yAxis.tickFormat()(bars.y()(e.point, e.pointIndex)),
             content = tooltip(e.series.key, x, y, e, chart);
 
         nv.tooltip.show([left, top], content, null, null, offsetElement);
     };
-
-    var renderWatch = nv.utils.renderWatch(dispatch, duration);
-
-    var stateGetter = function(data) {
-        return function(){
-            return {
-                active: data.map(function(d) { return !d.disabled })
-            };
-        }
-    };
-
-    var stateSetter = function(data) {
-        return function(state) {
-            if (state.active !== undefined)
-                data.forEach(function(series,i) {
-                    series.disabled = !state.active[i];
-                });
-        }
-    };
+    var renderWatch = nv.utils.renderWatch(dispatch, 0);
 
     function chart(selection) {
-        renderWatch.reset();
-        renderWatch.models(lines);
-        if (showXAxis) renderWatch.models(xAxis);
-        if (showYAxis) renderWatch.models(yAxis);
-
         selection.each(function(data) {
+            renderWatch.reset();
+            renderWatch.models(bars);
+            if (showXAxis) renderWatch.models(xAxis);
+            if (showYAxis) renderWatch.models(yAxis);
+
             var container = d3.select(this),
                 that = this;
             nv.utils.initSVG(container);
@@ -92,20 +89,10 @@ nv.models.lineChart = function() {
                     - margin.top - margin.bottom;
 
 
-            chart.update = function() {
-                if (duration === 0)
-                    container.call(chart);
-                else
-                    container.transition().duration(duration).call(chart)
-            };
+            chart.update = function() { container.transition().duration(transitionDuration).call(chart) };
             chart.container = this;
 
-            state
-                .setter(stateSetter(data), chart.update)
-                .getter(stateGetter(data))
-                .update();
-
-            // DEPRECATED set state.disableddisabled
+            //set state.disabled
             state.disabled = data.map(function(d) { return !!d.disabled });
 
             if (!defaultState) {
@@ -138,26 +125,20 @@ nv.models.lineChart = function() {
                 container.selectAll('.nv-noData').remove();
             }
 
-
             // Setup Scales
-            x = lines.xScale();
-            y = lines.yScale();
+            x = bars.xScale();
+            y = bars.yScale();
 
             // Setup containers and skeleton of chart
-            var wrap = container.selectAll('g.nv-wrap.nv-lineChart').data([data]);
-            var gEnter = wrap.enter().append('g').attr('class', 'nvd3 nv-wrap nv-lineChart').append('g');
+            var wrap = container.selectAll('g.nv-wrap.nv-historicalBarChart').data([data]);
+            var gEnter = wrap.enter().append('g').attr('class', 'nvd3 nv-wrap nv-historicalBarChart').append('g');
             var g = wrap.select('g');
 
-            gEnter.append("rect").style("opacity",0);
             gEnter.append('g').attr('class', 'nv-x nv-axis');
             gEnter.append('g').attr('class', 'nv-y nv-axis');
-            gEnter.append('g').attr('class', 'nv-linesWrap');
+            gEnter.append('g').attr('class', 'nv-barsWrap');
             gEnter.append('g').attr('class', 'nv-legendWrap');
             gEnter.append('g').attr('class', 'nv-interactive');
-
-            g.select("rect")
-                .attr("width",availableWidth)
-                .attr("height",(availableHeight > 0) ? availableHeight : 0);
 
             // Legend
             if (showLegend) {
@@ -176,7 +157,6 @@ nv.models.lineChart = function() {
                 wrap.select('.nv-legendWrap')
                     .attr('transform', 'translate(0,' + (-margin.top) +')')
             }
-
             wrap.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
             if (rightAlignYAxis) {
@@ -194,30 +174,27 @@ nv.models.lineChart = function() {
                     .xScale(x);
                 wrap.select(".nv-interactive").call(interactiveLayer);
             }
-
-            lines
+            bars
                 .width(availableWidth)
                 .height(availableHeight)
                 .color(data.map(function(d,i) {
                     return d.color || color(d, i);
                 }).filter(function(d,i) { return !data[i].disabled }));
 
-
-            var linesWrap = g.select('.nv-linesWrap')
+            var barsWrap = g.select('.nv-barsWrap')
                 .datum(data.filter(function(d) { return !d.disabled }));
-
-            linesWrap.call(lines);
+            barsWrap.transition().call(bars);
 
             // Setup Axes
             if (showXAxis) {
                 xAxis
                     .scale(x)
-                    .ticks( nv.utils.calcTicksX(availableWidth/100, data) )
                     .tickSize(-availableHeight, 0);
 
                 g.select('.nv-x.nv-axis')
                     .attr('transform', 'translate(0,' + y.range()[0] + ')');
                 g.select('.nv-x.nv-axis')
+                    .transition()
                     .call(xAxis);
             }
 
@@ -228,6 +205,7 @@ nv.models.lineChart = function() {
                     .tickSize( -availableWidth, 0);
 
                 g.select('.nv-y.nv-axis')
+                    .transition()
                     .call(yAxis);
             }
 
@@ -235,15 +213,9 @@ nv.models.lineChart = function() {
             // Event Handling/Dispatching (in chart's scope)
             //------------------------------------------------------------
 
-            legend.dispatch.on('stateChange', function(newState) {
-                for (var key in newState)
-                    state[key] = newState[key];
-                dispatch.stateChange(state);
-                chart.update();
-            });
-
             interactiveLayer.dispatch.on('elementMousemove', function(e) {
-                lines.clearHighlights();
+                bars.clearHighlights();
+
                 var singlePoint, pointIndex, pointXLocation, allData = [];
                 data
                     .filter(function(series, i) {
@@ -252,7 +224,7 @@ nv.models.lineChart = function() {
                     })
                     .forEach(function(series,i) {
                         pointIndex = nv.interactiveBisect(series.values, e.pointXValue, chart.x());
-                        lines.highlightPoint(i, pointIndex, true);
+                        bars.highlightPoint(pointIndex,true);
                         var point = series.values[pointIndex];
                         if (typeof point === 'undefined') return;
                         if (typeof singlePoint === 'undefined') singlePoint = point;
@@ -260,18 +232,10 @@ nv.models.lineChart = function() {
                         allData.push({
                             key: series.key,
                             value: chart.y()(point, pointIndex),
-                            color: color(series,series.seriesIndex)
+                            color: color(series,series.seriesIndex),
+                            data: series.values[pointIndex]
                         });
                     });
-                //Highlight the tooltip entry based on which point the mouse is closest to.
-                if (allData.length > 2) {
-                    var yValue = chart.yScale().invert(e.mouseY);
-                    var domainExtent = Math.abs(chart.yScale().domain()[0] - chart.yScale().domain()[1]);
-                    var threshold = 0.03 * domainExtent;
-                    var indexToHighlight = nv.nearestValueIndex(allData.map(function(d){return d.value}),yValue,threshold);
-                    if (indexToHighlight !== null)
-                        allData[indexToHighlight].highlight = true;
-                }
 
                 var xValue = xAxis.tickFormat()(chart.x()(singlePoint,pointIndex));
                 interactiveLayer.tooltip
@@ -292,33 +256,38 @@ nv.models.lineChart = function() {
 
             });
 
-            interactiveLayer.dispatch.on('elementClick', function(e) {
-                var pointXLocation, allData = [];
-
-                data.filter(function(series, i) {
-                    series.seriesIndex = i;
-                    return !series.disabled;
-                }).forEach(function(series) {
-                    var pointIndex = nv.interactiveBisect(series.values, e.pointXValue, chart.x());
-                    var point = series.values[pointIndex];
-                    if (typeof point === 'undefined') return;
-                    if (typeof pointXLocation === 'undefined') pointXLocation = chart.xScale()(chart.x()(point,pointIndex));
-                    var yPos = chart.yScale()(chart.y()(point,pointIndex));
-                    allData.push({
-                        point: point,
-                        pointIndex: pointIndex,
-                        pos: [pointXLocation, yPos],
-                        seriesIndex: series.seriesIndex,
-                        series: series
-                    });
-                });
-
-                lines.dispatch.elementClick(allData);
-            });
-
             interactiveLayer.dispatch.on("elementMouseout",function(e) {
                 dispatch.tooltipHide();
-                lines.clearHighlights();
+                bars.clearHighlights();
+            });
+
+            legend.dispatch.on('legendClick', function(d,i) {
+                d.disabled = !d.disabled;
+
+                if (!data.filter(function(d) { return !d.disabled }).length) {
+                    data.map(function(d) {
+                        d.disabled = false;
+                        wrap.selectAll('.nv-series').classed('disabled', false);
+                        return d;
+                    });
+                }
+
+                state.disabled = data.map(function(d) { return !!d.disabled });
+                dispatch.stateChange(state);
+
+                selection.transition().call(chart);
+            });
+
+            legend.dispatch.on('legendDblclick', function(d) {
+                //Double clicking should always enable current series, and disabled all others.
+                data.forEach(function(d) {
+                    d.disabled = true;
+                });
+                d.disabled = false;
+
+                state.disabled = data.map(function(d) { return !!d.disabled });
+                dispatch.stateChange(state);
+                chart.update();
             });
 
             dispatch.on('tooltipShow', function(e) {
@@ -327,7 +296,7 @@ nv.models.lineChart = function() {
 
             dispatch.on('changeState', function(e) {
 
-                if (typeof e.disabled !== 'undefined' && data.length === e.disabled.length) {
+                if (typeof e.disabled !== 'undefined') {
                     data.forEach(function(series,i) {
                         series.disabled = e.disabled[i];
                     });
@@ -337,10 +306,9 @@ nv.models.lineChart = function() {
 
                 chart.update();
             });
-
         });
 
-        renderWatch.renderEnd('lineChart immediate');
+        renderWatch.renderEnd('historicalBarChart immediate');
         return chart;
     }
 
@@ -348,12 +316,12 @@ nv.models.lineChart = function() {
     // Event Handling/Dispatching (out of chart's scope)
     //------------------------------------------------------------
 
-    lines.dispatch.on('elementMouseover.tooltip', function(e) {
+    bars.dispatch.on('elementMouseover.tooltip', function(e) {
         e.pos = [e.pos[0] +  margin.left, e.pos[1] + margin.top];
         dispatch.tooltipShow(e);
     });
 
-    lines.dispatch.on('elementMouseout.tooltip', function(e) {
+    bars.dispatch.on('elementMouseout.tooltip', function(e) {
         dispatch.tooltipHide(e);
     });
 
@@ -367,13 +335,12 @@ nv.models.lineChart = function() {
 
     // expose chart's sub-components
     chart.dispatch = dispatch;
-    chart.lines = lines;
+    chart.bars = bars;
     chart.legend = legend;
     chart.xAxis = xAxis;
     chart.yAxis = yAxis;
     chart.interactiveLayer = interactiveLayer;
 
-    chart.dispatch = dispatch;
     chart.options = nv.utils.optionsFunc.bind(chart);
 
     chart._options = Object.create({}, {
@@ -381,8 +348,8 @@ nv.models.lineChart = function() {
         width:      {get: function(){return width;}, set: function(_){width=_;}},
         height:     {get: function(){return height;}, set: function(_){height=_;}},
         showLegend: {get: function(){return showLegend;}, set: function(_){showLegend=_;}},
-        showXAxis:      {get: function(){return showXAxis;}, set: function(_){showXAxis=_;}},
-        showYAxis:    {get: function(){return showYAxis;}, set: function(_){showYAxis=_;}},
+        showXAxis: {get: function(){return showXAxis;}, set: function(_){showXAxis=_;}},
+        showYAxis: {get: function(){return showYAxis;}, set: function(_){showYAxis=_;}},
         tooltips:    {get: function(){return tooltips;}, set: function(_){tooltips=_;}},
         tooltipContent:    {get: function(){return tooltip;}, set: function(_){tooltip=_;}},
         defaultState:    {get: function(){return defaultState;}, set: function(_){defaultState=_;}},
@@ -395,33 +362,55 @@ nv.models.lineChart = function() {
             margin.bottom = _.bottom !== undefined ? _.bottom : margin.bottom;
             margin.left   = _.left   !== undefined ? _.left   : margin.left;
         }},
-        duration: {get: function(){return duration;}, set: function(_){
-            duration = _;
-            renderWatch.reset(duration);
-            lines.duration(duration);
-            xAxis.duration(duration);
-            yAxis.duration(duration);
-        }},
         color:  {get: function(){return color;}, set: function(_){
             color = nv.utils.getColor(_);
             legend.color(color);
-            lines.color(color);
+            bars.color(color);
+        }},
+        duration:    {get: function(){return transitionDuration;}, set: function(_){
+            transitionDuration=_;
+            renderWatch.reset(transitionDuration);
+            yAxis.duration(transitionDuration);
+            xAxis.duration(transitionDuration);
         }},
         rightAlignYAxis: {get: function(){return rightAlignYAxis;}, set: function(_){
             rightAlignYAxis = _;
-            yAxis.orient( rightAlignYAxis ? 'right' : 'left');
+            yAxis.orient( (_) ? 'right' : 'left');
         }},
         useInteractiveGuideline: {get: function(){return useInteractiveGuideline;}, set: function(_){
             useInteractiveGuideline = _;
-            if (useInteractiveGuideline) {
-                lines.interactive(false);
-                lines.useVoronoi(false);
+            if (_ === true) {
+                chart.interactive(false);
             }
         }}
     });
 
-    nv.utils.inheritOptions(chart, lines);
+    nv.utils.inheritOptions(chart, bars);
     nv.utils.initOptions(chart);
 
+    return chart;
+};
+
+
+// ohlcChart is just a historical chart with oclc bars and some tweaks
+nv.models.ohlcBarChart = function() {
+    var chart = nv.models.historicalBarChart(nv.models.ohlcBar());
+
+    // special default tooltip since we show multiple values per x
+    chart.useInteractiveGuideline(true);
+    chart.interactiveLayer.tooltip.contentGenerator(function(data) {
+        // we assume only one series exists for this chart
+        var d = data.series[0].data;
+        // match line colors as defined in nv.d3.css
+        var color = d.open < d.close ? "2ca02c" : "d62728";
+        return '' +
+            '<h3 style="color: #' + color + '">' + data.value + '</h3>' +
+            '<table>' +
+            '<tr><td>open:</td><td>' + chart.yAxis.tickFormat()(d.open) + '</td></tr>' +
+            '<tr><td>close:</td><td>' + chart.yAxis.tickFormat()(d.close) + '</td></tr>' +
+            '<tr><td>high</td><td>' + chart.yAxis.tickFormat()(d.high) + '</td></tr>' +
+            '<tr><td>low:</td><td>' + chart.yAxis.tickFormat()(d.low) + '</td></tr>' +
+            '</table>';
+    });
     return chart;
 };
