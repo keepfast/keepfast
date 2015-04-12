@@ -133,15 +133,7 @@ Profile.prototype.showAll = function () {
     $.getJSON('/profile.json', function (data) {
 
         if (data.length === 0) {
-            var emptyEntry = '<tr>' +
-                             '  <td colspan="3">' +
-                             '      <p class="lead text-center"><strong>There are no Monitors yet...<br/>' +
-                             '          <a href="#box-form-profile" class="btn btn-primary fui-plus" data-toggle="collapse"> Add one</a>' +
-                             '      </strong></p>' +
-                             '  </td>' +
-                             '</tr>';
-
-            $('#profile-tbody').html(emptyEntry);
+            $('#profile-tbody .lead strong').text('There are no monitors yet');
         } else {
             var items = {
                 emails: [],
