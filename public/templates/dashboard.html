@@ -6,13 +6,18 @@
   <div class="row">
     <div class="span12">
       <div class="row">
-        {% set tiles = ['PageSpeed', 'YSlow', 'Time to load', 'Size'] %}
+        {% set tiles = [
+            ['PageSpeed', 'Score'],
+            ['YSlow', 'Score'],
+            ['Time to load', 'Seconds'],
+            ['Size', 'MB']
+          ] %}
         {% for tile in tiles %}
           <div class="span3">
             <div class="tile">
-              <h3 class="tile-title">{{ tile }}</h3>
-              <p id="connections-{{ tile|lower|replace(' ','','g') }}">0</p>
-              <span class="palette palette-turquoise">Score</span>
+              <h3 class="tile-title">{{ tile[0] }}</h3>
+              <p id="connections-{{ tile[0]|lower|replace(' ','','g') }}">0</p>
+              <span class="palette palette-turquoise">{{ tile[1] }}</span>
             </div>
           </div>
         {% endfor %}
