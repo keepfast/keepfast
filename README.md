@@ -57,7 +57,7 @@ node server.js
 
 9. It's running at [localhost:3000](http://localhost:3000)
 
-#### Author
+#### Reference Values based on [http://httparchive.org/interesting.php](http://httparchive.org/interesting.php)
 - Number of resources (39)
 - Unique hosts (Max 18 domains)
 - Transferred bytes (2169KB)
@@ -65,7 +65,7 @@ node server.js
 - YSlow (80)
 - Time to load (4 in seconds)
 
-#### Reference Values based on [http://httparchive.org/interesting.php](http://httparchive.org/interesting.php)
+#### Author
 
 [![Davidson Fellipe](http://gravatar.com/avatar/054c583ad5dc09a861874e14dcb43e4c?s=70)](https://github.com/davidsonfellipe)
 <br>
