@@ -58,13 +58,12 @@ node server.js
 9. It's running at [localhost:3000](http://localhost:3000)
 
 #### Author
-- Number of resources
-- Unique hosts
-- Transferred bytes
-- PageSpeed
-- YSlow
-- Time to load (in seconds)
-- Page Weight
+- Number of resources (39)
+- Unique hosts (Max 18 domains)
+- Transferred bytes (2169KB)
+- PageSpeed (79)
+- YSlow (80)
+- Time to load (4 in seconds)
 
 #### Reference Values based on [http://httparchive.org/interesting.php](http://httparchive.org/interesting.php)
 
