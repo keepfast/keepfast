@@ -66,7 +66,7 @@ node server.js
 - Time to load (in seconds)
 - Page Weight
 
-#### AuthorA
+#### Reference Values based on [http://httparchive.org/interesting.php](http://httparchive.org/interesting.php)
 
 [![Davidson Fellipe](http://gravatar.com/avatar/054c583ad5dc09a861874e14dcb43e4c?s=70)](https://github.com/davidsonfellipe)
 <br>
