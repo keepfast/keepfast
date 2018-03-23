@@ -42,7 +42,7 @@ cd keepfast
 
 6. Install dependencies:
 ```bash
-sudo npm install
+$ npm install
 ```
 
 7. Run your MongoDB on 27017 port, or see [how to run](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/#using-mongodb-from-homebrew-and-macports):
